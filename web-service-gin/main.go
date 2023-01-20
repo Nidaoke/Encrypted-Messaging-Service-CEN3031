@@ -1,17 +1,20 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
-	"log"
-	"net/http"
-	"os"
+	"crypto/sha256"											//Used for encrypting
+	"encoding/hex"											//Encodes bytes to hex string
+	"database/sql"											//SQL database
+	"fmt"													//IO stuff
+	"log"													//Logging
+	"net/http"												//HTTP
+	"os"													//Get info from machine
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-sql-driver/mysql"
 )
 
-var db *sql.DB
+var db *sql.DB												//Reference to database, stored globally
+var hasher = sha256.New()									//Hashing function, stored globally
 
 type account struct{ 										//Account type, holds a username and password string
 	//ID uint `json:"id"` 									//ig we can use username for id? soemthing about relational algebra?
@@ -82,6 +85,14 @@ func postAccounts(con *gin.Context){
 		log.Fatal(fmt.Errorf("postAccounts: %v", err))
 		return
 	}
+
+	hasher.Reset()											//Clear hashing function
+	hasher.Write([]byte(acc.Username))						//Write info to it
+	acc.Username = hex.EncodeToString(hasher.Sum(nil))		//Get the encrypted value and overwrite (stored as string)
+
+	hasher.Reset()
+	hasher.Write([]byte(acc.Password))
+	acc.Password = hex.EncodeToString(hasher.Sum(nil))
 
 															//Try to insert this into our database
 	result, err := db.Exec("INSERT INTO accounts (username, password) VALUES (?, ?)", acc.Username, acc.Password)
