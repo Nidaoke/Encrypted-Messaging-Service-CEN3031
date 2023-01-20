@@ -1,10 +1,17 @@
 package main
 
 import (
+	"database/sql"
+	"fmt"
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-sql-driver/mysql"
 )
+
+var db *sql.DB
 
 type account struct{ 										//Account type, holds a username and password string
 	//ID uint `json:"id"` 									//ig we can use username for id? soemthing about relational algebra?
@@ -12,12 +19,28 @@ type account struct{ 										//Account type, holds a username and password str
 	Password string `json:"password"`
 }
 
-var accounts = []account{ 									//Accounts container, an array of type 'account's
-	{Username: "user1", Password: "password123"},
-	{Username: "user2", Password: "password321"},
-}
+func main() {
+	//Database stuff
+    cfg := mysql.Config{									//Configure database connection properties
+        User:   os.Getenv("DBUSER"),
+        Passwd: os.Getenv("DBPASS"),
+        Net:    "tcp",
+        Addr:   "127.0.0.1:3306",
+        DBName: "softengproj",
+    }
+    var err error
+    db, err = sql.Open("mysql", cfg.FormatDSN())			//Open Database
+    if err != nil {
+        log.Fatal(err)
+    }
 
-func main(){ 												//Main function called with 'go run .'
+    pingErr := db.Ping()									//Try to connect to database
+    if pingErr != nil {
+        log.Fatal(pingErr)
+    }
+    fmt.Println("Connected!")
+
+	//HTTP Stuff
 	router := gin.Default() 								//Basic default router
 	
 	router.GET("/", getAccounts) 							//When getting main page, call getAccounts
@@ -26,17 +49,52 @@ func main(){ 												//Main function called with 'go run .'
 	router.Run("localhost:8080") 							//Run this on port 8080 locally
 }
 
-func getAccounts(con *gin.Context){
-	con.JSON(http.StatusOK, accounts) 						//Return list of accounts as JSON data
+func getAccounts(con *gin.Context) {
+	var accounts []account
+
+	rows, err := db.Query("SELECT * FROM accounts") 		//Query the accounts table
+	if err != nil{
+		log.Fatal(fmt.Errorf("getAccounts: %v", err))
+		return
+	}
+	
+	defer rows.Close() 										//IDK what this does tbh
+	for rows.Next(){										//Go through the rows, scan them into our account struct, append to list
+		var acc account
+		if err := rows.Scan(&acc.Username, &acc.Password); err != nil{
+			log.Fatal(fmt.Errorf("getAccounts: %v", err))
+			return
+		}
+		accounts = append(accounts, acc)
+	}
+
+	if err := rows.Err(); err != nil{
+		log.Fatal(fmt.Errorf("getAccounts: %v", err))
+		return
+	}
+	con.JSON(http.StatusOK, accounts)						//Send list as json to context
 }
 
 func postAccounts(con *gin.Context){
-	var newAccount account 									//Create a new account
+	var acc account
 
-	if e := con.BindJSON(&newAccount); e != nil{ 			//Bind the JSON parameter to our new account, return if failed
+	if err := con.BindJSON(&acc); err != nil{				//Bind the curl info to an account
+		log.Fatal(fmt.Errorf("postAccounts: %v", err))
 		return
 	}
 
-	accounts = append(accounts, newAccount) 				//Append the new account to our list
-	con.JSON(http.StatusCreated, newAccount) 				//Return the http post response with our new account
+															//Try to insert this into our database
+	result, err := db.Exec("INSERT INTO accounts (username, password) VALUES (?, ?)", acc.Username, acc.Password)
+	if err != nil{
+		log.Fatal(fmt.Errorf("postAccounts: %v", err))
+		return
+	}
+
+	username, err := result.LastInsertId()					//This can probably be removed
+	if err != nil{
+		log.Fatal(fmt.Errorf("postAccounts: %v", err))
+	}
+
+	fmt.Printf("Response: %v\n", username)
+	con.JSON(http.StatusCreated, acc)						//Send out a context message
 }
