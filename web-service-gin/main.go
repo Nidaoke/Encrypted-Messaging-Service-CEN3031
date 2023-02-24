@@ -78,37 +78,3 @@ func postAccount(con *gin.Context){
 
     con.JSON(http.StatusCreated, acc)
 }
-
-//OLD POST ACCOUNTS, NEED TO WRITE NEW ONE. USE SOMETHING LIKE //insert ABOVE
-
-/*func postAccounts(con *gin.Context){
-    var acc account
-
-    if err := con.BindJSON(&acc); err != nil{				//Bind the curl info to an account
-      log.Fatal(fmt.Errorf("postAccounts: %v", err))
-      return
-    }
-
-    hasher.Reset()											//Clear hashing function
-    hasher.Write([]byte(acc.Username))						//Write info to it
-    acc.Username = hex.EncodeToString(hasher.Sum(nil))		//Get the encrypted value and overwrite (stored as string)
-
-    hasher.Reset()
-    hasher.Write([]byte(acc.Password))
-    acc.Password = hex.EncodeToString(hasher.Sum(nil))
-
-                                //Try to insert this into our database
-    result, err := db.Exec("INSERT INTO accounts (username, password) VALUES (?, ?)", acc.Username, acc.Password)
-    if err != nil{
-      log.Fatal(fmt.Errorf("postAccounts: %v", err))
-      return
-    }
-
-    username, err := result.LastInsertId()					//This can probably be removed
-    if err != nil{
-      log.Fatal(fmt.Errorf("postAccounts: %v", err))
-    }
-
-    fmt.Printf("Response: %v\n", username)
-    con.JSON(http.StatusCreated, acc)						//Send out a context message
-  }*/
