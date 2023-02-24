@@ -1,15 +1,15 @@
 package main
 
 import (
-	  "database/sql"
-    "fmt"
-	  "net/http"
+	"database/sql"
+	"fmt"
+	"net/http"
 
-    "crypto/sha256"
-    "encoding/hex"
+	"crypto/sha256"
+	"encoding/hex"
 
-	  "github.com/gin-gonic/gin"
-	  _ "github.com/mattn/go-sqlite3"
+	"github.com/gin-gonic/gin"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 var db *sql.DB
@@ -36,7 +36,14 @@ func main() {
 
     router := gin.Default()
     router.GET("/", getAccounts)
+    router.POST("/", postAccount)
     router.Run("localhost:9000")
+}
+
+func checkErr(err error) {
+    if err != nil {
+        panic(err)
+    }
 }
 
 func getAccounts(con *gin.Context) {
@@ -51,16 +58,25 @@ func getAccounts(con *gin.Context) {
         checkErr(err)
         accounts = append(accounts, acc)
     }
-
     rows.Close()
 
     con.JSON(http.StatusOK, accounts)
 }
 
-func checkErr(err error) {
-    if err != nil {
-        panic(err)
-    }
+func postAccount(con *gin.Context){
+    var acc account
+
+    err := con.BindJSON(&acc)
+    checkErr(err)
+
+    hasher.Reset()
+    hasher.Write([]byte(acc.Password))
+    acc.Password = hex.EncodeToString(hasher.Sum(nil))
+
+    _, err = db.Exec("INSERT INTO accounts (username, password) VALUES (?, ?)", acc.Username, acc.Password)
+    checkErr(err)
+
+    con.JSON(http.StatusCreated, acc)
 }
 
 //OLD POST ACCOUNTS, NEED TO WRITE NEW ONE. USE SOMETHING LIKE //insert ABOVE
