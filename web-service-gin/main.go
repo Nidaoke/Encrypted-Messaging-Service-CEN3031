@@ -46,7 +46,13 @@ func checkErr(err error) {
     }
 }
 
+func handleHeaders(con *gin.Context){
+  con.Header("Access-Control-Allow-Origin", "*")
+}
+
 func getAccounts(con *gin.Context) {
+  handleHeaders(con)
+
     var accounts []account
 
     rows, err := db.Query("SELECT * FROM accounts") 		//Query the accounts table
