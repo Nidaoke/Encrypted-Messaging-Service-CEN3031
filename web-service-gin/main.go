@@ -41,7 +41,7 @@ func main() {
 	//DefaultConfig as a start point
 	config := cors.DefaultConfig()
 	config.AllowHeaders = []string{"Authorization", "content-type"}
-	config.AllowOrigins = []string{"http://localhost:4200"}
+	config.AllowOrigins = []string{"http://localhost:4200"} //Change to * at some point
 	router.Use(cors.New(config))
 	//End
 
