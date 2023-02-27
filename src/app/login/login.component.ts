@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -6,49 +8,124 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  signupUsers: any[] = [];
+  //strict type checking so we bypass with !
+  signupForm!: FormGroup;
+  loginForm!: FormGroup;
 
-  signupObj: any = {
-    username: '',
-    email: '',
-    password: ''
-  };
 
-  loginObj: any = {
-    username: '',
-    password: ''
-  };
-
-  constructor() {}
+  //http: HttpClient
+  constructor(private formbuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    const localData = localStorage.getItem('signupUsers');
-    if(localData != null)
-    {
-      this.signupUsers = JSON.parse(localData);
-    }
+    this.signupForm = this.createSignFormGroup();
+    this.loginForm = this.createLogFormGroup();
   }
 
-  onSignUp() {
-    this.signupUsers.push(this.signupObj);
-    localStorage.setItem('signupUsers', JSON.stringify(this.signupUsers));
-
-    this.signupObj = {
-      username: '',
-      email: '',
-      password: ''
-    };
+  //code largely from: https://github.com/Jon-Peppinck/social-posts
+  createSignFormGroup(): FormGroup {
+    return new FormGroup({
+      name: new FormControl("", [Validators.required, Validators.minLength(2)]),
+      email: new FormControl("", [Validators.required, Validators.email]),
+      password: new FormControl("", [
+        Validators.required,
+        Validators.minLength(7),
+      ]),
+    });
   }
-  //this needs fixing. It's displaying correctly
-  onLogin() {
-    const userExists = this.signupUsers.find(m => m.username == this.loginObj.username && m.password == this.loginObj.password);
-    if(userExists != undefined)
-    {
-      alert('User login successfully');
-    }
-    else {
-      alert('Wrong credentials');
-    }
+
+  createLogFormGroup(): FormGroup {
+    return new FormGroup({
+      email: new FormControl("", [Validators.required, Validators.email]),
+      password: new FormControl("", [
+        Validators.required,
+        Validators.minLength(7),
+      ]),
+    });
+  }
+
+  onSignUp(): void {
+    console.log(this.signupForm.value);
+    //take the username, email, and password
+    //make HTTP request to backend to store it
+    //if stored successful, go to profile page
+    //if not, alert
+    //        ^ either usename taken or password not right
+  }
+
+  onLogin(): void {
+    //authentication
+
+
+    //take username and password
+    //make HTTP request to backend to find it
+    //if found, load up that person's homepage
+    //if not, prompt for Sign Up (alert form)
+
+//---------------------------------------------------------------------------
+    //SPRINT 1 CODE:
+    // const userExists = this.signupUsers.find(m => m.username == this.loginObj.username && m.password == this.loginObj.password);
+    // if(userExists != undefined)
+    // {
+    //   alert('User login successfully');
+    // }
+    // else {
+    //   alert('Wrong credentials');
+    // }
   }
 
 }
+
+// import { HttpClient } from '@angular/common/http';
+// import { Component } from '@angular/core';
+// import { Router } from '@angular/router';
+
+// @Component({
+//   selector: 'app-login',
+//   templateUrl: './login.component.html',
+//   styleUrls: ['./login.component.scss']
+// })
+// export class LoginComponent {
+//   isLogin: boolean = false
+//   registerFirstName: string | null = null
+//   registerLastName: string | null = null
+//   registerEmail: string | null = null
+//   registerPassword: string | null = null
+//   loginEmail: string | null = null
+//   loginPassword: string | null = null
+//   constructor(
+//     private httpClient: HttpClient,
+//     private router: Router
+//   ){
+//   }
+//   register(){
+//     console.log(this.registerFirstName, this.registerPassword)
+//     this.httpClient.post('http://localhost:8080/register', {
+//       firstName: this.registerFirstName,
+//       lastName: this.registerLastName,
+//       email: this.registerEmail,
+//       password: this.registerPassword,
+//     }).subscribe((response: any) => {
+//       if(response){
+//         localStorage.setItem('token', response.jwt)
+//         this.router.navigate(['profile'])
+//       }
+//       this.registerFirstName = null
+//       this.registerLastName = null
+//       this.registerEmail = null
+//       this.registerPassword = null
+//     })
+//   }
+//   login(){
+//     this.httpClient.post('http://localhost:8080/login', {
+//       email: this.loginEmail,
+//       password: this.loginPassword
+//     }).subscribe((response: any) => {
+//       if(response){
+//         localStorage.setItem('token', response.jwt)
+//         this.router.navigate(['profile'])
+//       }
+//       this.loginEmail = null
+//       this.loginPassword = null
+//     })
+//   }
+// }
