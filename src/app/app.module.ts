@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UserComponent } from './user.component';
 
 import { JwtInterceptor } from './jwt.interceptor';
 
@@ -23,7 +24,8 @@ import { JwtInterceptor } from './jwt.interceptor';
   declarations: [
     AppComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
