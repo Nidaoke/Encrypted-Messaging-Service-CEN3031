@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<!-- Base code from:
+<!-- Base format code from:
   https://codepen.io/mamislimen/pen/jOwwLvy
+
+    Formal registration from:
+  https://jasonwatmore.com/post/2022/11/29/angular-14-user-registration-and-login-example-tutorial#account-service-ts
 -->
 <html>
 <head>
@@ -8,25 +11,53 @@
 <body>
 	<div class="main">
 		<input type="checkbox" id="chk" aria-hidden="true">
-
+      <!-- sign up form thing: https://www.youtube.com/watch?v=7al2_2t2AME&t=97s -->
 			<div class="signup">
-				<form>
+				<form [formGroup]="signupForm" (ngSubmit)="onSignUp()" novalidate>
 					<label for="chk" aria-hidden="true">Sign up</label>
-					<input type="text" name="txt" placeholder="User name" required="" [(ngModel)]="signupObj.username">
-					<input type="email" name="email" placeholder="Email" required="" [(ngModel)]="signupObj.email"> <!-- later used for authentication -->
-					<input type="password" name="pswd" placeholder="Password" required="" [(ngModel)]="signupObj.password">
+
+					<input formControlName="name" name="txt" placeholder="Username" >
+
+					<input formControlName="email" name="emal" placeholder="Email"> <!-- later used for authentication -->
+
+					<input formControlName="password" name="pswd" placeholder="Password">
+
 					<button (click)="onSignUp()">Sign up</button>
 				</form>
 			</div>
 
 			<div class="login">
-				<form>
+				<form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
 					<label for="chk" aria-hidden="true">Login</label>
-					<input type="text" name="txt" placeholder="User name" required="" [(ngModel)]="signupObj.username">
-					<input type="password" name="pswd" placeholder="Password" required="" [(ngModel)]="signupObj.password">
+
+					<input type="text" name="txt" placeholder="User name" required="ngModel">
+
+					<input type="password" name="pswd" placeholder="Password" required="ngModel">
+
 					<button (click)="onLogin()">Login</button>
+
 				</form>
 			</div>
 	</div>
 </body>
 </html>
+
+
+<!-- <div *ngIf="!isLogin">
+    <h3>Register Account</h3>
+    <input [(ngModel)]="registerFirstName" type="text" placeholder="First Name" />
+    <input [(ngModel)]="registerLastName" type="text" placeholder="Last Name" />
+    <input [(ngModel)]="registerEmail" type="email" placeholder="Email" />
+    <input [(ngModel)]="registerPassword" type="password" placeholder="Password" />
+    <button (click)="register()" [disabled]="!registerFirstName || !registerLastName || !registerEmail || !registerPassword" >Register</button>
+    <button (click)="isLogin=true">Have an Account?</button>
+</div>
+
+<div *ngIf="isLogin">
+    <h3>Login</h3>
+    <input [(ngModel)]="loginEmail" type="email" placeholder="Email" />
+    <input [(ngModel)]="loginPassword" type="password" placeholder="Password" />
+    <button (click)="login()" [disabled]="!loginEmail || !loginPassword" >Login</button>
+    <button (click)="isLogin=false">Register an Account?</button>
+</div>
+-->
