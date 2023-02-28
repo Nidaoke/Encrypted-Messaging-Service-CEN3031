@@ -14,8 +14,8 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
+import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 import { JwtInterceptor } from './jwt.interceptor';
 
