@@ -22,10 +22,13 @@
 
 					<input formControlName="password" type="password" name="pswd" placeholder="Password"  required="ngModel">
 
-					<button (click)="onSignUp()">Sign up</button>
+					<button (click)="onSignUp()" routerLink="../profile">Sign up</button>
 
 				</form>
 			</div>
+      <div class="card-footer text-right">
+        <small><a routerLink="../forget">Forgot Password</a></small>
+      </div>
 
 			<div class="login">
 				<form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
@@ -39,6 +42,9 @@
 
 				</form>
 			</div>
+      <div class="card-footer text-right">
+        <small><a routerLink="../forget">Forgot Password</a></small>
+    </div>
 	</div>
 </body>
 </html>
