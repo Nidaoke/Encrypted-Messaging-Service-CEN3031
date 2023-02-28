@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,9 +14,12 @@ export class LoginComponent implements OnInit {
   signupForm!: FormGroup;
   loginForm!: FormGroup;
 
-
   //http: HttpClient
-  constructor(private formbuilder: FormBuilder) { }
+  constructor(
+    private formbuilder: FormBuilder,
+    private authService: AuthService,
+     private router: Router
+    ) { }
 
   ngOnInit(): void {
     this.signupForm = this.createSignFormGroup();
@@ -35,7 +40,7 @@ export class LoginComponent implements OnInit {
 
   createLogFormGroup(): FormGroup {
     return new FormGroup({
-      email: new FormControl("", [Validators.required, Validators.email]),
+      name: new FormControl("", [Validators.required, Validators.minLength(2)]),
       password: new FormControl("", [
         Validators.required,
         Validators.minLength(7),
@@ -44,12 +49,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSignUp(): void {
-    console.log(this.signupForm.value);
-    //take the username, email, and password
-    //make HTTP request to backend to store it
-    //if stored successful, go to profile page
-    //if not, alert
-    //        ^ either usename taken or password not right
+    this.authService.onSignUp(this.signupForm.value).subscribe((msg) => {
+      console.log(msg);
+    });
   }
 
   onLogin(): void {

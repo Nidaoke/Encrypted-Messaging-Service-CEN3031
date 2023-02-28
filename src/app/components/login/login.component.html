@@ -16,28 +16,35 @@
 				<form [formGroup]="signupForm" (ngSubmit)="onSignUp()" novalidate>
 					<label for="chk" aria-hidden="true">Sign up</label>
 
-					<input formControlName="name" name="txt" placeholder="Username" >
+					<input formControlName="name" name="nam" placeholder="Username" >
 
 					<input formControlName="email" name="emal" placeholder="Email"> <!-- later used for authentication -->
 
-					<input formControlName="password" name="pswd" placeholder="Password">
+					<input formControlName="password" type="password" name="pswd" placeholder="Password"  required="ngModel">
 
-					<button (click)="onSignUp()">Sign up</button>
+					<button (click)="onSignUp()" routerLink="../profile">Sign up</button>
+
 				</form>
 			</div>
+      <div class="card-footer text-right">
+        <small><a routerLink="../forget">Forgot Password</a></small>
+      </div>
 
 			<div class="login">
 				<form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
 					<label for="chk" aria-hidden="true">Login</label>
 
-					<input type="text" name="txt" placeholder="User name" required="ngModel">
+					<input formControlName="name" name="nam" placeholder="Username" >
 
-					<input type="password" name="pswd" placeholder="Password" required="ngModel">
+					<input formControlName="password" type="password" name="pswd" placeholder="Password" required="ngModel">
 
 					<button (click)="onLogin()">Login</button>
 
 				</form>
 			</div>
+      <div class="card-footer text-right">
+        <small><a routerLink="../forget">Forgot Password</a></small>
+    </div>
 	</div>
 </body>
 </html>
