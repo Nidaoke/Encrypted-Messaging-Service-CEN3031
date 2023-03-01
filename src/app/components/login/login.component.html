@@ -22,7 +22,7 @@
 
 					<input formControlName="password" type="password" name="pswd" placeholder="Password"  required="ngModel">
 
-					<button type="button" (click)="onSignUp()" routerLink="../profile">Sign up</button>
+					<button name="signup" type="button" (click)="onSignUp()" routerLink="../profile">Sign up</button>
 
 				</form>
 			</div>
@@ -34,9 +34,9 @@
 				<form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
 					<label for="chk" aria-hidden="true">Login</label>
 
-					<input formControlName="username" name="nam" placeholder="Username" >
+					<input formControlName="loginUsername" name="nam" placeholder="Username" >
 
-					<input formControlName="password" type="password" name="pswd" placeholder="Password" required="ngModel">
+					<input formControlName="loginPassword" type="password" name="pswd" placeholder="Password" required="ngModel">
 
 					<button type="button" (click)="onLogin()">Login</button>
 

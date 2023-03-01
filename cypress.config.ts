@@ -1,5 +1,6 @@
 import { defineConfig } from "cypress";
 
+//this was supposed to help? idk
 module.exports = defineConfig({
   experimentalModifyObstructiveThirdPartyCode: false,
   e2e: {
