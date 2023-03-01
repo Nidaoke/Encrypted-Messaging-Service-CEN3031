@@ -22,28 +22,54 @@ func TestGetAccounts(t *testing.T) {
 	}
 
 	if _, err := db.Exec(create); err != nil {
-		panic(err)
+		//panic(err)
+		panic("Failed to create database!")
 	}
 
+	//Insert
 	res, err := db.Exec("INSERT INTO account(id, username, password, email) values(?, ?, ?, ?)", 1, u, p, e)
 	if err != nil {
-		panic(err)
-		//panic("Failed to insert info into database!")
+		//panic(err)
+		panic("Failed to insert info into database!")
 	}
 
 	var ID int64
 	ID, err = res.LastInsertId()
 	if err != nil {
-		panic(err)
-		//panic("Failed to insert info into database!")
+		//panic(err)
+		panic("Failed to insert info into database!")
 	}
 
 	fmt.Println("Number of accounts: %w", ID)
 
+	// update
+
+	newUser := "MarcusLugrand"
+
+	res, err = db.Exec("update account set username=? where id=?", newUser, ID)
+	if err != nil {
+		//panic(err)
+		panic("Failed to insert info into database!")
+	} else {
+		t.Logf("Updated username successfully from Marcus to MarcusLugrand")
+	}
+
+	affect, err := res.RowsAffected()
+	if err != nil {
+		//panic(err)
+		panic("Failed to check rows affected after delete!")
+	} else {
+		t.Logf("Successfully show what row is affected, which is: ")
+	}
+
+	fmt.Println(affect)
+
+	//Query
 	rows, err := db.Query("SELECT * FROM account")
-	//rows, err := db.Query("SELECT * username, password, email FROM account")
 	if err != nil {
 		panic("Failed to query into the database!")
+	} else {
+		t.Logf("Successfully queried from account")
 	}
 
 	var scanCheck bool
@@ -57,11 +83,11 @@ func TestGetAccounts(t *testing.T) {
 		err = rows.Scan(&id, &username, &password, &email)
 
 		if err != nil {
-			panic(err)
-			//panic("Failed to iterate through the database!")
+			//panic(err)
+			panic("Failed to iterate through the database!")
 		}
 
-		if username == u && p == password && e == email {
+		if username == newUser && p == password && e == email {
 			t.Logf("User %s Found!", username)
 			scanCheck = true
 			break
@@ -72,6 +98,27 @@ func TestGetAccounts(t *testing.T) {
 	if scanCheck == false {
 		panic("The user was not found!")
 	}
+
+	// delete
+	res, err = db.Exec("delete from account where id=?", ID)
+	if err != nil {
+		//panic(err)
+		panic("Failed to delete!")
+	} else {
+		t.Logf("Successfully delete a profile using ID")
+	}
+
+	affect, err = res.RowsAffected()
+	if err != nil {
+		//panic(err)
+		panic("Failed to check rows affected after delete!")
+	} else {
+		t.Logf("Successfully show what row is affected, which is: ")
+	}
+
+	fmt.Println(affect)
+
+	db.Close()
 }
 
 /*func TestPostAccount(t *testing.T) {
