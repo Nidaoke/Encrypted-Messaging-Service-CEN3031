@@ -23,7 +23,7 @@ export class UserComponent {
   ngOnInit(): void {
     this.users.data = [];
     this.userService.getUsers().subscribe((response: any) => {
-      debugger;
+
       for (let i = 0; i < response.length; i++){
         var user = {} as User;
         user.username = response[i].username;
