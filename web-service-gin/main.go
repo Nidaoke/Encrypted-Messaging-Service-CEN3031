@@ -10,6 +10,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+  "github.com/thinkerou/favicon"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -46,6 +47,8 @@ func main() {
 	config.AllowOrigins = []string{"http://localhost:4200"}
 	router.Use(cors.New(config))
 	//End
+
+  router.Use(favicon.New("./favicon.ico"));
 
 	router.GET("/", getAccounts)
 	router.POST("/", postAccount)
