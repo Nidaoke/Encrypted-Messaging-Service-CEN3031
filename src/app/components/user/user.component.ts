@@ -1,35 +1,37 @@
-import { Component, Input } from '@angular/core';
-import { Users, User } from '../../models/user';
-import { UserService } from '../../services/user.service';
+// //DEBUGGING COMPONENT TO CHECK GET IS RUNNING -- need to modify
 
-@Component({
-  selector: 'user',
-  templateUrl: './user.component.html',
-  styles: [
-    `
-      h1 {
-        font-family: Lato;
-      }
-    `,
-  ],
-})
-export class UserComponent {
-  users: Users;
+// import { Component, Input } from '@angular/core';
+// import { Users, User } from '../../models/user';
+// import { UserService } from '../../services/user.service';
 
-  constructor(public userService: UserService) {
-    this.users = {} as Users;
-  }
+// @Component({
+//   selector: 'user',
+//   templateUrl: './user.component.html',
+//   styles: [
+//     `
+//       h1 {
+//         font-family: Lato;
+//       }
+//     `,
+//   ],
+// })
+// export class UserComponent {
+//   users: Users;
 
-  ngOnInit(): void {
-    this.users.data = [];
-    this.userService.getUsers().subscribe((response: any) => {
+//   constructor(public userService: UserService) {
+//     this.users = {} as Users;
+//   }
 
-      for (let i = 0; i < response.length; i++){
-        var user = {} as User;
-        user.username = response[i].username;
-        user.password = response[i].password;
-        this.users.data.push(user);
-      }
-    });
-  }
-}
+//   ngOnInit(): void {
+//     this.users.data = [];
+//     this.userService.getUsers().subscribe((response: any) => {
+
+//       for (let i = 0; i < response.length; i++){
+//         var user = {} as User;
+//         user.username = response[i].username;
+//         user.password = response[i].password;
+//         this.users.data.push(user);
+//       }
+//     });
+//   }
+// }
