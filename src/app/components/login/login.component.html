@@ -16,7 +16,7 @@
 				<form [formGroup]="signupForm" (ngSubmit)="onSignUp()" novalidate>
 					<label for="chk" aria-hidden="true">Sign up</label>
 
-					<input formControlName="username" name="nam" placeholder="Username" >
+					<input formControlName="name" name="nam" placeholder="Username" >
 
 					<input formControlName="email" name="emal" placeholder="Email"> <!-- later used for authentication -->
 
@@ -34,7 +34,7 @@
 				<form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
 					<label for="chk" aria-hidden="true">Login</label>
 
-					<input formControlName="username" name="nam" placeholder="Username" >
+					<input formControlName="name" name="nam" placeholder="Username" >
 
 					<input formControlName="password" type="password" name="pswd" placeholder="Password" required="ngModel">
 

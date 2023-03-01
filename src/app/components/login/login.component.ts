@@ -18,8 +18,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formbuilder: FormBuilder,
     private authService: AuthService,
-    private http: HttpClient,
-    private router: Router
+     private router: Router
     ) { }
 
   ngOnInit(): void {
@@ -30,7 +29,7 @@ export class LoginComponent implements OnInit {
   //code largely from: https://github.com/Jon-Peppinck/social-posts
   createSignFormGroup(): FormGroup {
     return new FormGroup({
-      username: new FormControl("", [Validators.required, Validators.minLength(2)]),
+      name: new FormControl("", [Validators.required, Validators.minLength(2)]),
       email: new FormControl("", [Validators.required, Validators.email]),
       password: new FormControl("", [
         Validators.required,
@@ -41,7 +40,7 @@ export class LoginComponent implements OnInit {
 
   createLogFormGroup(): FormGroup {
     return new FormGroup({
-      username: new FormControl("", [Validators.required, Validators.minLength(2)]),
+      name: new FormControl("", [Validators.required, Validators.minLength(2)]),
       password: new FormControl("", [
         Validators.required,
         Validators.minLength(7),
@@ -50,19 +49,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSignUp(): void {
-    const url = 'http://localhost:9000/';
-    let resource = JSON.stringify(this.signupForm.value);
-    console.log('Add Button clicked: ' + resource);
-    let formObj = this.signupForm.getRawValue();
-        let serializedForm = JSON.stringify(formObj);
-
-        this.http.post(url, serializedForm).subscribe((data) => {
-          console.log(data);}
-        );
-
-    // this.authService.onSignUp(this.signupForm.value).subscribe((msg) => {
-    //   console.log(msg);
-    // });
+    this.authService.onSignUp(this.signupForm.value).subscribe((msg) => {
+      console.log(msg);
+    });
   }
 
   onLogin(): void {
@@ -74,6 +63,16 @@ export class LoginComponent implements OnInit {
     //if found, load up that person's homepage
     //if not, prompt for Sign Up (alert form)
 
+//---------------------------------------------------------------------------
+    //SPRINT 1 CODE:
+    // const userExists = this.signupUsers.find(m => m.username == this.loginObj.username && m.password == this.loginObj.password);
+    // if(userExists != undefined)
+    // {
+    //   alert('User login successfully');
+    // }
+    // else {
+    //   alert('Wrong credentials');
+    // }
   }
 
 }

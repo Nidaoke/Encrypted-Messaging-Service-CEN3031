@@ -18,8 +18,10 @@ var db *sql.DB
 var hasher = sha256.New()
 
 type account struct {
+  Id int `json:"id"`
 	Username string `json:"username"`
 	Password string `json:"password"`
+  Email string `json:"email"`
 }
 
 func main() {
@@ -86,7 +88,7 @@ func postAccount(con *gin.Context) {
 	hasher.Write([]byte(acc.Password))
 	acc.Password = hex.EncodeToString(hasher.Sum(nil))
 
-	_, err = db.Exec("INSERT INTO accounts (username, password) VALUES (?, ?)", acc.Username, acc.Password)
+	_, err = db.Exec("INSERT INTO accounts (username, password, email) VALUES (?, ?, ?)", acc.Username, acc.Password, acc.Email)
 	checkErr(err)
 
 	con.JSON(http.StatusCreated, acc)
