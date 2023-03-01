@@ -16,7 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { UserComponent } from './components/user/user.component';
+//import { UserComponent } from './components/user/user.component';
 import { ForgetComponent } from './components/forget/forget.component';
 
 import { JwtInterceptor } from './jwt.interceptor';
@@ -26,8 +26,8 @@ import { JwtInterceptor } from './jwt.interceptor';
     AppComponent,
     LoginComponent,
     ProfileComponent,
-    ForgetComponent,
-    UserComponent
+    ForgetComponent
+    //UserComponent
   ],
   imports: [
     BrowserModule,

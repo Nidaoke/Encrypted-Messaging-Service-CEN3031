@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSignUp(): void {
+    //https://stackoverflow.com/questions/39698247/angular-2-form-serialization-into-json-format
     const url = 'http://localhost:9000/';
     let resource = JSON.stringify(this.signupForm.value);
     console.log('Add Button clicked: ' + resource);
