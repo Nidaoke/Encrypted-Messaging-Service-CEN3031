@@ -10,6 +10,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+  "github.com/thinkerou/favicon"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -17,8 +18,10 @@ var db *sql.DB
 var hasher = sha256.New()
 
 type account struct {
+  Id int `json:"id"`
 	Username string `json:"username"`
 	Password string `json:"password"`
+  Email string `json:"email"`
 }
 
 func main() {
@@ -44,6 +47,8 @@ func main() {
 	config.AllowOrigins = []string{"http://localhost:4200"} //Change to * at some point
 	router.Use(cors.New(config))
 	//End
+
+  router.Use(favicon.New("./favicon.ico"));
 
 	router.GET("/", getAccounts)
 	router.POST("/", postAccount)
@@ -83,7 +88,7 @@ func postAccount(con *gin.Context) {
 	hasher.Write([]byte(acc.Password))
 	acc.Password = hex.EncodeToString(hasher.Sum(nil))
 
-	_, err = db.Exec("INSERT INTO accounts (username, password) VALUES (?, ?)", acc.Username, acc.Password)
+	_, err = db.Exec("INSERT INTO accounts (username, password, email) VALUES (?, ?, ?)", acc.Username, acc.Password, acc.Email)
 	checkErr(err)
 
 	con.JSON(http.StatusCreated, acc)
