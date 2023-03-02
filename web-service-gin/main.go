@@ -18,7 +18,6 @@ var db *sql.DB
 var hasher = sha256.New()
 
 type account struct {
-  Id int `json:"id"`
 	Username string `json:"username"`
 	Password string `json:"password"`
   Email string `json:"email"`
@@ -69,7 +68,7 @@ func getAccounts(con *gin.Context) {
 
 	for rows.Next() {
 		var acc account
-		err := rows.Scan(&acc.Username, &acc.Password)
+		err := rows.Scan(&acc.Username, &acc.Password, &acc.Email)
 		checkErr(err)
 		accounts = append(accounts, acc)
 	}
