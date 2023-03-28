@@ -26,9 +26,6 @@
 
 				</form>
 			</div>
-      <div class="card-footer text-right">
-        <small><a routerLink="../forget">Forgot Password</a></small>
-      </div>
 
 			<div class="login">
 				<form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
@@ -40,11 +37,10 @@
 
 					<button type="button" (click)="onLogin()">Login</button>
 
+          <a routerLink="../forget"><p style="text-align:center; font-size: 12px">Forgot Password</p></a>
+
 				</form>
 			</div>
-      <div class="card-footer text-right">
-        <small><a routerLink="../forget">Forgot Password</a></small>
-    </div>
 	</div>
 </body>
 </html>
