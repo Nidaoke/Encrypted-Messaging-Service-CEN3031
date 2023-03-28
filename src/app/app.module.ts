@@ -20,7 +20,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ForgetComponent } from './components/forget/forget.component';
 
 import { JwtInterceptor } from './jwt.interceptor';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
