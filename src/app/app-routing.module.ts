@@ -10,11 +10,11 @@ import { ForgetComponent } from './components/forget/forget.component';
 //https://blog.devgenius.io/angular-login-with-golang-and-mysql-92a59eec1249 - made the first page the profile page (will change later to login)
 const routes: Routes = [
   {
-    path: '',
+    path: 'login',
     component: LoginComponent
   },
   {
-    path:'profile',
+    path: 'profile',
     component: ProfileComponent
   },
   {
