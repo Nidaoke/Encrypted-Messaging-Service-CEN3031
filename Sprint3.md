@@ -17,9 +17,11 @@
     Building off of Sprint 2's Cypress Test, this one checks to see if a user is able to login and send a message. It tests the updated login
     as well as the new homepage chat. Tester1 and Tester2 are dummy accounts made for this purpose.
 #### Login Component:
-    (TBC)
+    Checks that the login component page provides the 3 input boxes for user signup (username, email, and password) and the 2 input boxes for user login (username and password). It also checks that the signup and login buttons are provided.
 #### Forget Component:
-    (TBC)
+    Checks that the forget component page provides the 2 input boxes (username and email) for user password recovery and that recover button is provided to make the request.
+#### Profile Component:
+    Checks that the profile component page provides the 3 buttons to either edit the profile, logout, or send a message.
 #### Home Component:
     This unit test is testing to see a string of max 200 characters is able to be typed and sent to a friend.
 
