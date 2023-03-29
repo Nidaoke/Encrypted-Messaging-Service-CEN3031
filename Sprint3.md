@@ -201,3 +201,38 @@
         sent the message does not matter)). The client should be prepared to receive a list in the form of a JSON array, with each element
         containing four attributes, one integer called 'id', one string called 'from', one string called 'to', and one strng called 'message'. Note
         here that both the 'from' field and the 'to' field will match the usernames supplied in the path, in either order.
+        
+## PostMessage
+    Description:
+        Allows for the addition of a message to the list of all messages in the database. Essentially, this is used to update the database when
+        one user on the platform send a message to another user of the platform, but can also be used for testing purposed (like testing CURL
+        methods in the backend). Then this POST request is made, two usernames representing both the sender and the receiver of the message,
+        and the message contents must all be supplied, or else an error will be thrown from the backend. This method will also return the JSON
+        field representing the message that was just created.
+        
+    Request:
+        localhost:9000/messages
+        
+    HTTP Type:
+        POST
+        
+    Input:
+        JSON field in the following format:
+            string 'from', string 'to', string 'message'
+            Here, from represents the username of the user who is sending the message, to represents the username of the user who is receiving the
+            message, and message represents the contents of the message being sent. Note that the message here must be capped to 200 characters or
+            fewer.
+        
+    Output:
+        JSON field in the following format:
+            int 'id', string 'username', string 'password', string 'email'
+            Here, id represents the numerical id of this message, from represents the username of the user who is sending the message, to represents
+            the username of the user who is receiving the message, and message represents the contents of the message being sent. Note that the
+            message here must be capped to 200 characters or fewer.
+        HTTP 201
+        
+    Usage: 
+        For this method, the client should make an HTTP POST request to port 9000 of the server with an additional path of /messages (currently
+        this is at localhost:9000/messages), whilst passing along a JSON field representing the parameters discussed in the Input section (must
+        include the usernames of both the sender and the receiver and the message contents, capped at 200 characters). The client can be prepared
+        to receive a field representing the message that was just created, but this is not necessary.
