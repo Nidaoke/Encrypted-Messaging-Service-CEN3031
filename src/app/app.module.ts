@@ -10,6 +10,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
 
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from './app-routing.module';
@@ -18,9 +19,9 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 //import { UserComponent } from './components/user/user.component';
 import { ForgetComponent } from './components/forget/forget.component';
+import { HomeComponent } from './components/home/home.component';
 
 import { JwtInterceptor } from './jwt.interceptor';
-import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { HomeComponent } from './components/home/home.component';
     MatIconModule,
     MatInputModule,
     MatListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatAutocompleteModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS,
