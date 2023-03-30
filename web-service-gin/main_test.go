@@ -214,7 +214,73 @@ func TestGetAccountsContent(t *testing.T){
   }
 }
 
-func TestGetAccounts(t *testing.T) {
+func TestPostAccountCount(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+
+  currentCount := 0;
+  rows, err := db.Query("SELECT * FROM accounts"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    currentCount += 1;
+  }
+
+  _, err = db.Exec("INSERT INTO accounts VALUES(\"debug\", \"pwd\", \"email\")"); if(err!=nil){panic(err)};
+  newCount := 0;
+  rows, err = db.Query("SELECT * FROM accounts"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    newCount += 1;
+  }
+
+  _, err = db.Exec("DELETE FROM accounts WHERE \"username\"==\"debug\""); if(err!=nil){panic(err)};
+
+  fmt.Print("Expected Count: ");
+  fmt.Print(currentCount+1);
+  fmt.Print("\nActual Count: ");
+  fmt.Println(newCount);
+
+  if(currentCount+1!=newCount){
+    panic("Counts do not match!");
+  }
+}
+
+func TestPostAccountContent(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+
+  _, err = db.Exec("INSERT INTO accounts VALUES(\"debug\", \"pwd\", \"email\")"); if(err!=nil){panic(err)};
+  username := "";
+  password := "";
+  email := "";
+  rows, err := db.Query("SELECT * FROM accounts"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    err = rows.Scan(&username, &password, &email); if(err!=nil){panic(err)};
+  }
+
+  _, err = db.Exec("DELETE FROM accounts WHERE \"username\"==\"debug\""); if(err!=nil){panic(err)};
+
+  fmt.Print("Expected Username: ");
+  fmt.Print("debug");
+  fmt.Print("\nActual Username: ");
+  fmt.Println(username);
+  fmt.Print("Expected Password: ");
+  fmt.Print("pwd");
+  fmt.Print("\nActual Password: ");
+  fmt.Println(password);
+  fmt.Print("Expected Email: ");
+  fmt.Print("email");
+  fmt.Print("\nActual Email: ");
+  fmt.Println(email);
+
+  if(username!="debug"){
+    panic("Usernames do not match!");
+  }
+  if(password!="pwd"){
+    panic("Passwords do not match!");
+  }
+  if(email!="email"){
+    panic("Emails do not match!");
+  }
+}
+
+/*func TestGetAccounts(t *testing.T) {
 
 	const file string = "test.db"
 	const create string = "CREATE TABLE IF NOT EXISTS account (id INT NOT NULL PRIMARY KEY, username VARCHAR(264) NOT NULL,password VARCHAR(264) NOT NULL,email VARCHAR(264) NOT NULL);"
@@ -327,7 +393,7 @@ func TestGetAccounts(t *testing.T) {
 	fmt.Println(affect)
 
 	db.Close()
-}
+}*/
 
 /*func TestPostAccount(t *testing.T) {
 
