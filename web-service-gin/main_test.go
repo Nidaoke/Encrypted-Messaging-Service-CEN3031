@@ -6,6 +6,144 @@ import (
 	"testing"
 )
 
+func TestGetMessages1Count(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+  buffer := "";
+
+  //Get Message id tracker
+  tracker := 0;
+  row, err := db.Query("SELECT * FROM sqlite_sequence"); if(err!=nil){panic(err)};
+  for row.Next(){err = row.Scan(&buffer, &tracker); if(err!=nil){panic(err)}};
+
+  //Add 3 debug messages
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug1\", \"debug2\", \"Hi\")"); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug1\", \"debug2\", \"Hi2\")"); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug2\", \"debug1\", \"Hi back\")"); if(err!=nil){panic(err)};
+
+  //Test
+  count := 0;
+  rows, err := db.Query("SELECT * FROM messages WHERE (\"from\"==\"debug1\" OR \"to\"==\"debug1\")"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    count += 1;
+  }
+
+  //Go back to before
+  _, err = db.Exec("DELETE FROM messages WHERE (\"from\"==\"debug1\" OR \"to\"==\"debug1\")"); if(err!=nil){panic(err)};
+  _, err = db.Exec("DELETE FROM sqlite_sequence WHERE \"name\"==\"messages\""); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO sqlite_sequence VALUES(\"messages\", ?)", tracker); if(err!=nil){panic(err)};
+
+  fmt.Print("Expected Count: 3");
+  fmt.Print("\nActual Count: ");
+  fmt.Println(count);
+
+  if(count != 3){
+    panic("Counts are not equal!");
+  }
+}
+
+func TestGetMessages1Content(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+  buffer := "";
+  buffer2 := 0;
+
+  //Get Message id tracker
+  tracker := 0;
+  row, err := db.Query("SELECT * FROM sqlite_sequence"); if(err!=nil){panic(err)};
+  for row.Next(){err = row.Scan(&buffer, &tracker); if(err!=nil){panic(err)}};
+
+  //Add debug messages
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug1\", \"debug2\", \"Hi\")"); if(err!=nil){panic(err)};
+
+  //Test
+  mes := "";
+  rows, err := db.Query("SELECT * FROM messages WHERE (\"from\"==\"debug1\" OR \"to\"==\"debug1\")"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    err = rows.Scan(&buffer2, &buffer, &buffer, &mes); if(err!=nil){panic(err)};
+  }
+
+  //Go back to before
+  _, err = db.Exec("DELETE FROM messages WHERE (\"from\"==\"debug1\" OR \"to\"==\"debug1\")"); if(err!=nil){panic(err)};
+  _, err = db.Exec("DELETE FROM sqlite_sequence WHERE \"name\"==\"messages\""); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO sqlite_sequence VALUES(\"messages\", ?)", tracker); if(err!=nil){panic(err)};
+
+  fmt.Print("Expected Message: Hi");
+  fmt.Print("\nActual Message: ");
+  fmt.Println(mes);
+
+  if(mes != "Hi"){
+    panic("Messages are not equal!");
+  }
+}
+
+func TestGetMessages2Count(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+  buffer := "";
+
+  //Get Message id tracker
+  tracker := 0;
+  row, err := db.Query("SELECT * FROM sqlite_sequence"); if(err!=nil){panic(err)};
+  for row.Next(){err = row.Scan(&buffer, &tracker); if(err!=nil){panic(err)}};
+
+  //Add 3 debug messages
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug1\", \"debug2\", \"Hi\")"); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug1\", \"debug2\", \"Hi2\")"); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug2\", \"debug1\", \"Hi back\")"); if(err!=nil){panic(err)};
+
+  //Test
+  count := 0;
+  rows, err := db.Query("SELECT * FROM messages WHERE ((\"from\"==\"debug1\" AND \"to\"==\"debug2\") OR (\"from\"==\"debug2\" AND \"to\"==\"debug1\"))"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    count += 1;
+  }
+
+  //Go back to before
+  _, err = db.Exec("DELETE FROM messages WHERE ((\"from\"==\"debug1\" AND \"to\"==\"debug2\") OR (\"from\"==\"debug2\" AND \"to\"==\"debug1\"))"); if(err!=nil){panic(err)};
+  _, err = db.Exec("DELETE FROM sqlite_sequence WHERE \"name\"==\"messages\""); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO sqlite_sequence VALUES(\"messages\", ?)", tracker); if(err!=nil){panic(err)};
+
+  fmt.Print("Expected Count: 3");
+  fmt.Print("\nActual Count: ");
+  fmt.Println(count);
+
+  if(count != 3){
+    panic("Counts are not equal!");
+  }
+}
+
+func TestGetMessages2Content(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+  buffer := "";
+  buffer2 := 0;
+
+  //Get Message id tracker
+  tracker := 0;
+  row, err := db.Query("SELECT * FROM sqlite_sequence"); if(err!=nil){panic(err)};
+  for row.Next(){err = row.Scan(&buffer, &tracker); if(err!=nil){panic(err)}};
+
+  //Add debug messages
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug1\", \"debug2\", \"Hi\")"); if(err!=nil){panic(err)};
+
+  //Test
+  mes := "";
+  rows, err := db.Query("SELECT * FROM messages WHERE ((\"from\"==\"debug1\" AND \"to\"==\"debug2\") OR (\"from\"==\"debug2\" AND \"to\"==\"debug1\"))"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    err = rows.Scan(&buffer2, &buffer, &buffer, &mes); if(err!=nil){panic(err)};
+  }
+
+  //Go back to before
+  _, err = db.Exec("DELETE FROM messages WHERE ((\"from\"==\"debug1\" AND \"to\"==\"debug2\") OR (\"from\"==\"debug2\" AND \"to\"==\"debug1\"))"); if(err!=nil){panic(err)};
+  _, err = db.Exec("DELETE FROM sqlite_sequence WHERE \"name\"==\"messages\""); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO sqlite_sequence VALUES(\"messages\", ?)", tracker); if(err!=nil){panic(err)};
+
+  fmt.Print("Expected Message: Hi");
+  fmt.Print("\nActual Message: ");
+  fmt.Println(mes);
+
+  if(mes != "Hi"){
+    panic("Messages are not equal!");
+  }
+}
+
 func TestGetMessagesCount(t *testing.T){
   db, err := sql.Open("sqlite3", "./database.db");
   if(err!=nil) { panic(err) };
@@ -34,6 +172,45 @@ func TestGetMessagesCount(t *testing.T){
 
   if(actualCount != expectedCount){
     panic("Counts are not equal");
+  }
+}
+
+func TestGetAccountsCount(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+  expectedCount := 2; //Check number of accounts from database.db viewer
+  actualCount := 0;
+  rows, err := db.Query("SELECT * FROM accounts"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    actualCount += 1;
+  }
+
+  fmt.Print("Expected Count: ");
+  fmt.Print(expectedCount);
+  fmt.Print("\nActual Count: ");
+  fmt.Println(actualCount);
+
+  if(expectedCount!=actualCount){
+    panic("Counts do not match!");
+  }
+}
+
+func TestGetAccountsContent(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+  expectedName := "tester2"; //Check last account added in database.db viewer
+  actualName := "";
+  buffer := "";
+  rows, err := db.Query("SELECT * FROM accounts"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    err = rows.Scan(&actualName, &buffer, &buffer); if(err!=nil){panic(err)};
+  }
+
+  fmt.Print("Expected Name: ");
+  fmt.Print(expectedName);
+  fmt.Print("\nActual Name: ");
+  fmt.Println(actualName);
+
+  if(expectedName!=actualName){
+    panic("Names do not match!");
   }
 }
 
