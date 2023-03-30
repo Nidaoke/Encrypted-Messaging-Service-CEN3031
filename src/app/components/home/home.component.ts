@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import Pusher from 'pusher-js';
 import { Router } from '@angular/router';
 
 interface chatData {
