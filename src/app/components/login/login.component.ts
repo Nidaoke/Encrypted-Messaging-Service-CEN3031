@@ -52,14 +52,16 @@ export class LoginComponent implements OnInit {
   onSignUp(): void {
     //https://stackoverflow.com/questions/39698247/angular-2-form-serialization-into-json-format
     const url = 'http://localhost:9000/';
+
     let resource = JSON.stringify(this.signupForm.value);
     console.log('Add Button clicked: ' + resource);
-    let formObj = this.signupForm.getRawValue();
-        let serializedForm = JSON.stringify(formObj);
 
-        this.http.post(url, serializedForm).subscribe((data) => {
-          console.log(data);}
-        );
+    let formObj = this.signupForm.getRawValue();
+    let serializedForm = JSON.stringify(formObj);
+
+    this.http.post(url, serializedForm).subscribe((data) => {
+      console.log(data);}
+    );
 
     // this.authService.onSignUp(this.signupForm.value).subscribe((msg) => {
     //   console.log(msg);

@@ -19,7 +19,30 @@
           </mat-autocomplete>
         </div>
       </div>
-      <div class="messages" mat-elevation-z5></div>
+
+      <div class="messages" mat-elevation-z5>
+        <div class="chat-area">
+            <ng-container>
+              <div class="chat-bubble">
+                <ul>
+                  <li *ngFor="let item of chatList; let i=index">
+                    {{i}} - {{item.msg}}
+                  </li>
+                </ul>
+              </div>
+            </ng-container>
+          <div #endOfChat></div>
+
+        <div class="input-area">
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="Enter your message..." [formControl]="messageControl" (keydown.enter)="sendMessage()"/>
+            <button mat-icon-button matSuffix (click)="sendMessage()">
+              <mat-icon>send</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
     </div>
   </body>
 </html>
