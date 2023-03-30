@@ -15,6 +15,6 @@ describe('Real e2e testing UwU', () => {
     cy.get('button[name="signup"]').click()
 
     cy.url()
-      .should('be.equal', 'https://localhost:4200/profile')
+      .should('be.equal', 'http://localhost:4200/profile')
   })
 })

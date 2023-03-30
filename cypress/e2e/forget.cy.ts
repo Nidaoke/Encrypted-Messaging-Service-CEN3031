@@ -4,7 +4,6 @@ describe('Click around to Forget Password', () => {
     cy.reload()
 
     cy.contains("Login").click()
-    cy.get('button[name="login"]').click()
 
     // cy.get('input[formcontrolname="username"]')
     // .type('username2')
