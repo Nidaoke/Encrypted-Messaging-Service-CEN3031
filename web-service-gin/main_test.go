@@ -175,6 +175,45 @@ func TestGetMessagesCount(t *testing.T){
   }
 }
 
+func TestGetAccountsCount(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+  expectedCount := 2; //Check number of accounts from database.db viewer
+  actualCount := 0;
+  rows, err := db.Query("SELECT * FROM accounts"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    actualCount += 1;
+  }
+
+  fmt.Print("Expected Count: ");
+  fmt.Print(expectedCount);
+  fmt.Print("\nActual Count: ");
+  fmt.Println(actualCount);
+
+  if(expectedCount!=actualCount){
+    panic("Counts do not match!");
+  }
+}
+
+func TestGetAccountsContent(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+  expectedName := "tester2"; //Check last account added in database.db viewer
+  actualName := "";
+  buffer := "";
+  rows, err := db.Query("SELECT * FROM accounts"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    err = rows.Scan(&actualName, &buffer, &buffer); if(err!=nil){panic(err)};
+  }
+
+  fmt.Print("Expected Name: ");
+  fmt.Print(expectedName);
+  fmt.Print("\nActual Name: ");
+  fmt.Println(actualName);
+
+  if(expectedName!=actualName){
+    panic("Names do not match!");
+  }
+}
+
 func TestGetAccounts(t *testing.T) {
 
 	const file string = "test.db"
