@@ -41,6 +41,40 @@ func TestGetMessages1Count(t *testing.T){
   }
 }
 
+func TestGetMessages1Content(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+  buffer := "";
+  buffer2 := 0;
+
+  //Get Message id tracker
+  tracker := 0;
+  row, err := db.Query("SELECT * FROM sqlite_sequence"); if(err!=nil){panic(err)};
+  for row.Next(){err = row.Scan(&buffer, &tracker); if(err!=nil){panic(err)}};
+
+  //Add debug messages
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug1\", \"debug2\", \"Hi\")"); if(err!=nil){panic(err)};
+
+  //Test
+  mes := "";
+  rows, err := db.Query("SELECT * FROM messages WHERE (\"from\"==\"debug1\" OR \"to\"==\"debug1\")"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    err = rows.Scan(&buffer2, &buffer, &buffer, &mes); if(err!=nil){panic(err)};
+  }
+
+  //Go back to before
+  _, err = db.Exec("DELETE FROM messages WHERE (\"from\"==\"debug1\" OR \"to\"==\"debug1\")"); if(err!=nil){panic(err)};
+  _, err = db.Exec("DELETE FROM sqlite_sequence WHERE \"name\"==\"messages\""); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO sqlite_sequence VALUES(\"messages\", ?)", tracker); if(err!=nil){panic(err)};
+
+  fmt.Print("Expected Message: Hi");
+  fmt.Print("\nActual Message: ");
+  fmt.Println(mes);
+
+  if(mes != "Hi"){
+    panic("Messages are not equal!");
+  }
+}
+
 func TestGetMessages2Count(t *testing.T){
   db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
   buffer := "";
@@ -73,6 +107,40 @@ func TestGetMessages2Count(t *testing.T){
 
   if(count != 3){
     panic("Counts are not equal!");
+  }
+}
+
+func TestGetMessages2Content(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+  buffer := "";
+  buffer2 := 0;
+
+  //Get Message id tracker
+  tracker := 0;
+  row, err := db.Query("SELECT * FROM sqlite_sequence"); if(err!=nil){panic(err)};
+  for row.Next(){err = row.Scan(&buffer, &tracker); if(err!=nil){panic(err)}};
+
+  //Add debug messages
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug1\", \"debug2\", \"Hi\")"); if(err!=nil){panic(err)};
+
+  //Test
+  mes := "";
+  rows, err := db.Query("SELECT * FROM messages WHERE ((\"from\"==\"debug1\" AND \"to\"==\"debug2\") OR (\"from\"==\"debug2\" AND \"to\"==\"debug1\"))"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    err = rows.Scan(&buffer2, &buffer, &buffer, &mes); if(err!=nil){panic(err)};
+  }
+
+  //Go back to before
+  _, err = db.Exec("DELETE FROM messages WHERE ((\"from\"==\"debug1\" AND \"to\"==\"debug2\") OR (\"from\"==\"debug2\" AND \"to\"==\"debug1\"))"); if(err!=nil){panic(err)};
+  _, err = db.Exec("DELETE FROM sqlite_sequence WHERE \"name\"==\"messages\""); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO sqlite_sequence VALUES(\"messages\", ?)", tracker); if(err!=nil){panic(err)};
+
+  fmt.Print("Expected Message: Hi");
+  fmt.Print("\nActual Message: ");
+  fmt.Println(mes);
+
+  if(mes != "Hi"){
+    panic("Messages are not equal!");
   }
 }
 
