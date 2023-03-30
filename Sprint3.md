@@ -24,7 +24,7 @@
     of items returned by the GetMessages function. The second, TestGetMessagesContent, verifies that the GetMessages function returns the
     proper data types, and that the data filled within the form is accurate (to the last message added).
 #### PostMessage:
-    somethingsomething
+    For this function, TestPostMessage was created to test the functionality of posting a message from and to users. First the unit test opens a database already filled with the tables 'accounts' and 'messages'. It then executes inserting a predestined message between two users. We then keep track of that ID value so we can delete that insert at the end of the test. Next we query and search through each row using a for loop with an if statement that find that message and who it is between. Finally we delete the entry entered earlier.
 #### GetMessages1:
     The first of the GetMessages1 tests is TestGetMessages1Count, which verifies that the GetMessages1 function returns a list with the same size
     as the number of messages in the database with the specified user as either the sender or receiver. The second of the GetMessages1 tests is
