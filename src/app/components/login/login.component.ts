@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+//import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   //http: HttpClient
   constructor(
     private formbuilder: FormBuilder,
-    private authService: AuthService,
+    //private authService: AuthService,
     private http: HttpClient,
     private router: Router
     ) { }
@@ -52,14 +52,16 @@ export class LoginComponent implements OnInit {
   onSignUp(): void {
     //https://stackoverflow.com/questions/39698247/angular-2-form-serialization-into-json-format
     const url = 'http://localhost:9000/';
+
     let resource = JSON.stringify(this.signupForm.value);
     console.log('Add Button clicked: ' + resource);
-    let formObj = this.signupForm.getRawValue();
-        let serializedForm = JSON.stringify(formObj);
 
-        this.http.post(url, serializedForm).subscribe((data) => {
-          console.log(data);}
-        );
+    let formObj = this.signupForm.getRawValue();
+    let serializedForm = JSON.stringify(formObj);
+
+    this.http.post(url, serializedForm).subscribe((data) => {
+      console.log(data);}
+    );
 
     // this.authService.onSignUp(this.signupForm.value).subscribe((msg) => {
     //   console.log(msg);
