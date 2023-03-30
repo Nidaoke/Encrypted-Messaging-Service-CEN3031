@@ -6,6 +6,37 @@ import (
 	"testing"
 )
 
+func TestGetMessages2Count(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
+  buffer := "";
+
+  //Get Message id tracker
+  tracker := 0;
+  row, err := db.Query("SELECT * FROM sqlite_sequence"); if(err!=nil){panic(err)};
+  for row.Next(){err = row.Scan(&buffer, &tracker); if(err!=nil){panic(err)}};
+
+  //Add 3 debug messages
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug1\", \"debug2\", \"Hi\")"); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug1\", \"debug2\", \"Hi2\")"); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO messages VALUES(null, \"debug2\", \"debug1\", \"Hi back\")"); if(err!=nil){panic(err)};
+
+  //Test
+  count := 0;
+  rows, err := db.Query("SELECT * FROM messages WHERE ((\"from\"==\"debug1\" AND \"to\"==\"debug2\") OR (\"from\"==\"debug2\" AND \"to\"==\"debug1\"))"); if(err!=nil){panic(err)};
+  for rows.Next(){
+    count += 1;
+  }
+
+  //Go back to before
+  _, err = db.Exec("DELETE FROM messages WHERE ((\"from\"==\"debug1\" AND \"to\"==\"debug2\") OR (\"from\"==\"debug2\" AND \"to\"==\"debug1\"))"); if(err!=nil){panic(err)};
+  _, err = db.Exec("DELETE FROM sqlite_sequence WHERE \"name\"==\"messages\""); if(err!=nil){panic(err)};
+  _, err = db.Exec("INSERT INTO sqlite_sequence VALUES(\"messages\", ?)", tracker); if(err!=nil){panic(err)};
+
+  fmt.Print("Expected Count: 3");
+  fmt.Print("\nActual Count: ");
+  fmt.Println(count);
+}
+
 func TestGetMessagesCount(t *testing.T){
   db, err := sql.Open("sqlite3", "./database.db");
   if(err!=nil) { panic(err) };
