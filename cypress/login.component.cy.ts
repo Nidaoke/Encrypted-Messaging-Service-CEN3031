@@ -1,13 +1,20 @@
 import { LoginComponent } from "src/app/components/login/login.component"
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
-it('mounts, username types, and checks for a button that is visible', () => {
+it('checks that all input boxes and buttons (signup and login) are visible', () => {
   cy.mount(LoginComponent, {
     imports: [HttpClientModule],
     declarations: [LoginComponent],
-    providers: [HttpClient])
+    providers: [HttpClient],
+  })
 
     cy.get('input[formcontrolname="username"]').type('UserNameUnitTest')
-
+    cy.get('input[formcontrolname="username"]').should("be.visible")
+    cy.get('input[formcontrolname="email"]').should("be.visible")
+    cy.get('input[formcontrolname="password"]').should("be.visible")
     cy.get('button[name="signup"]').should("be.visible")
+
+    cy.get('input[formcontrolname="loginUsername"]').should("be.visible")
+    cy.get('input[formcontrolname="loginPassword"]').should("be.visible")
+    cy.get('button[name="login"]').should("be.visible")
   })
