@@ -10,8 +10,31 @@
 
 # Unit Tests
 ## Backend
-#### (UNIT) testing:
-    (TBC)
+#### GetAccounts:
+    The GetAccounts unit tests have been broken up into multiple tests. The first, TestGetAccountsCount, verifies that the number of results returned
+    from GetAccounts is equal to the number of accounts in the backend's database. The second, TestGetAccountsContent, verifies that the
+    GetAccounts function returns the proper data types, and that the data filled within the form is accurate (to the last account added).
+#### PostAccount:
+    Additionally, the PostAccount tests have been broken up as well. The first, TestPostAccountCount, verifies that the number of accounts stored
+    in the database increases by one when PostAccount is called (and does not return an error), essentially verifying that an account was added.
+    The second, TestPostAccountContent, verifies that the data added to the database is accurately representative of the input data given
+    when PostAccount is called (that the username, password, and email all match).
+#### GetMessages:
+    The first of the GetMessages tests is TestGetMessagesCount, which verifies that the number of messages in the database is equal to the number
+    of items returned by the GetMessages function. The second, TestGetMessagesContent, verifies that the GetMessages function returns the
+    proper data types, and that the data filled within the form is accurate (to the last message added).
+#### PostMessage:
+    somethingsomething
+#### GetMessages1:
+    The first of the GetMessages1 tests is TestGetMessages1Count, which verifies that the GetMessages1 function returns a list with the same size
+    as the number of messages in the database with the specified user as either the sender or receiver. The second of the GetMessages1 tests is
+    TestGetMessages1Content, which verifies that the GetMessages1 function returns the information of the last message sent by or two the specified
+    user is correct. Specifically, it makes sure that the message contents of the last message by or to that user in the database equals the 
+    message contents of the last item returned by the function.
+#### GetMessages2:
+    All of the same tests for GetMessages1 exist for GetMessages2; that is, TestGetMessages2Count and TestGetMessages2Content. The only difference
+    is that these tests specifically verify the count and content of the messages in the database vs those returned by the GetMessages2Function
+    based on the two users specified by the function call path, as opposed to just the one user specified in GetMessages1.
 ## Frontend
 #### Cypress Tests:
     Building off of Sprint 2's Cypress Test, this one checks to see if a user is able to login and send a message. It tests the updated login
