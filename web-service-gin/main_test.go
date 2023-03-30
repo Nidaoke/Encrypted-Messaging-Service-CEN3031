@@ -3,10 +3,59 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"os"
 	"testing"
+
+	_ "github.com/lib/pq"
+	//"github.com/techschool/simplebank/util"
 )
 
-func TestGetAccounts(t *testing.T) {
+const (
+	dbDriver = "sqlite3"
+	dbSource = "test.db"
+
+	//dbDriver = "postgres"
+	//dbSource = "postgresql://root:secret@localhost:5432/simple_bank?sslm"
+)
+
+var testQueries *Queries
+
+//var testDB *sql.DB
+
+func TestMain(m *testing.M) {
+	/*conn, err := run(m)
+	  //conn, err := sql.Open("sqlite3", file)
+		if err != nil {
+			fmt.Errorf("Cannot connect to database: ", err)
+		}*/
+
+	fmt.Println("START MAIN TEST")
+
+	/*config, err := util.LoadConfig("../..")
+		if err != nil {
+			panic(err)
+			//panic("cannot load config:")
+		}
+
+		testDB, err = sql.Open(config.DBDriver, config.DBSource)
+		if err != nil {
+			//panic(err)
+			panic("cannot connect to db:")
+		}
+	  testQueries = New(testDB)*/
+
+	conn, err := sql.Open(dbDriver, dbSource)
+	if err != nil {
+		//panic(err)
+		panic("cannot connect to db:")
+	}
+
+	testQueries = New(conn)
+
+	os.Exit(m.Run())
+}
+
+/*func TestGetAccounts(t *testing.T) {
 
 	const file string = "test.db"
 	const create string = "CREATE TABLE IF NOT EXISTS account (id INT NOT NULL PRIMARY KEY, username VARCHAR(264) NOT NULL,password VARCHAR(264) NOT NULL,email VARCHAR(264) NOT NULL);"
@@ -121,7 +170,7 @@ func TestGetAccounts(t *testing.T) {
 	db.Close()
 }
 
-/*func TestPostAccount(t *testing.T) {
+func TestPostAccount(t *testing.T) {
 
 	//in :=
 
