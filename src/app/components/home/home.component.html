@@ -12,6 +12,7 @@
               placeholder="Search for friends..."
               [matAutocomplete]="users"
               [formControl]="searchControl"
+              formControlName="searchControll"
             />
           </mat-form-field>
           <mat-autocomplete #users="matAutocomplete">
@@ -35,7 +36,10 @@
 
         <div class="input-area">
           <mat-form-field appearance="outline">
-            <input matInput placeholder="Enter your message..." [formControl]="messageControl" (keydown.enter)="sendMessage()"/>
+            <input matInput placeholder="Enter your message..."
+            [formControl]="messageControl"
+            formControlName="messageControll"
+            (keydown.enter)="sendMessage()"/>
             <button mat-icon-button matSuffix (click)="sendMessage()">
               <mat-icon>send</mat-icon>
             </button>
