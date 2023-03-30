@@ -6,6 +6,37 @@ import (
 	"testing"
 )
 
+func TestGetMessagesCount(t *testing.T){
+  db, err := sql.Open("sqlite3", "./database.db");
+  if(err!=nil) { panic(err) };
+  row, err := db.Query("SELECT * FROM messages ORDER BY id DESC LIMIT 1");
+  if(err!=nil) { panic(err) };
+  //fmt.Println(row);
+  expectedCount := 0;
+  buffer := "";
+  for row.Next(){
+    err = row.Scan(&expectedCount, &buffer, &buffer, &buffer);
+    if(err!=nil) { panic(err)};
+  };
+  expectedCount += 1;
+
+  actualCount := 0;
+  rows, err := db.Query("SELECT * FROM messages");
+  if(err!=nil) { panic(err) };
+  for rows.Next(){
+    actualCount += 1;
+  }
+
+  fmt.Print("Expected Count: ");
+  fmt.Print(expectedCount);
+  fmt.Print("\nActual Count: ");
+  fmt.Println(actualCount);
+
+  if(actualCount != expectedCount){
+    panic("Counts are not equal");
+  }
+}
+
 func TestGetAccounts(t *testing.T) {
 
 	const file string = "test.db"
