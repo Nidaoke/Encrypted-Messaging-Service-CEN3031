@@ -55,7 +55,7 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-/*func TestGetMessages1Count(t *testing.T){
+func TestGetMessages1Count(t *testing.T){
   db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
   buffer := "";
 
@@ -442,17 +442,4 @@ func TestPostAccountContent(t *testing.T){
 	fmt.Println(affect)
 
 	db.Close()
-}*/
-
-func TestPostAccount(t *testing.T) {
-
-	//in :=
-
-	//TRIAL
-	t.Fatal("not implemented")
-
-	/*tests := []Tests {
-	  name: "Username",
-	  pass: "Password"
-	}
 }*/
