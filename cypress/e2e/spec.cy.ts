@@ -1,5 +1,5 @@
 describe('Real e2e testing UwU', () => {
-  it('sign up does stuff', () => {
+  it('sign up goes to profile', () => {
     cy.visit('http://localhost:4200/')
     cy.reload()
 
@@ -14,5 +14,7 @@ describe('Real e2e testing UwU', () => {
 
     cy.get('button[name="signup"]').click()
 
+    cy.url()
+      .should('be.equal', 'http://localhost:4200/profile')
   })
 })

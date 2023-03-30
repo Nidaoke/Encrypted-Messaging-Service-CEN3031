@@ -3,8 +3,9 @@
 # Progress
     From Sprint 2, the signup/login page is now more refined. 
     There is a Forget Password feature now implemented but will need further refinement. 
-    A homepage that doubles as a chatroom is created and messages are now able to be sent. Additionally, the messages are able to be stored in
-    the backend.
+    A homepage that doubles as a chatroom is created and messages are now able to be sent. There is a search bar that will later be able to autofill a
+    user's friends for selection. Additionally, the messages are able to be stored in the backend successfully. Tester1 and Tester2 are dummy accounts 
+    made for this purpose.
     The goal for next sprint is to be able to send/store longer messages, refine the visuals of various components, connect/route everything
     together, and hopefully get to the authentification during sign up.
 
@@ -37,8 +38,9 @@
     based on the two users specified by the function call path, as opposed to just the one user specified in GetMessages1.
 ## Frontend
 #### Cypress Tests:
-    Building off of Sprint 2's Cypress Test, this one checks to see if a user is able to login and send a message. It tests the updated login
-    as well as the new homepage chat. Tester1 and Tester2 are dummy accounts made for this purpose.
+    spec: Building off of Sprint 2's Cypress Test, this one checks to see if a user is able to sign up and be redirected to a Patrick profile page. 
+    forget: This e2e test will slowly be filled out as we go on. Its end goal is to be able to send an authentification email and to change password successfully.
+        As of right now, since the "forget password" option in underneath the "Login" section, we are just trying to see if the login section is able to be pulled up.
 #### Login Component:
     Checks that the login component page provides the 3 input boxes for user signup (username, email, and password) and the 2 input boxes for user login (username and password). It also checks that the signup and login buttons are provided.
 #### Forget Component:
@@ -46,7 +48,10 @@
 #### Profile Component:
     Checks that the profile component page provides the 3 buttons to either edit the profile, logout, or send a message.
 #### Home Component:
-    This unit test is testing to see a string of max 200 characters is able to be typed and sent to a friend.
+    The first unit test is testing to see if the search bar is able to be clicked and if the autocomplete of "Testerbaby" would pop up. This is to make sure
+        for future user friends it would pop their names up.
+    The second unit test is testing to see if the input for the chat is able to be typed in. We had ran into the issue of not being able to click into the input.
+    
 
 # Backend API Documentation
 ## GetAccounts
