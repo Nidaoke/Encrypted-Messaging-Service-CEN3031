@@ -70,12 +70,18 @@ func main() {
 
 	router.GET("/", getAccounts)
 	router.POST("/", postAccount)
+
 	router.GET("/messages", getMessages)
   router.GET("/messages/:name", getMessage1)
   router.GET("/messages/:name/:name2", getMessage2)
 	router.POST("/messages", postMessage)
+
   router.GET("/requests", getRequests)
+  router.POST("/requests", postRequest)
+
   router.GET("/friends", getFriends)
+  router.POST("/friends", postFriend)
+
 	router.Run("localhost:9000")
 }
 
@@ -201,6 +207,18 @@ func getRequests(con *gin.Context) {
 	con.JSON(http.StatusOK, requests)
 }
 
+func postRequest(con *gin.Context) {
+	var req request
+
+	err := con.BindJSON(&req)
+	checkErr(err)
+
+	_, err = db.Exec("INSERT INTO requests VALUES (?, ?, ?)", nil, req.Sentfrom, req.Sentto)
+	checkErr(err)
+
+	con.JSON(http.StatusCreated, req)
+}
+
 func getFriends(con *gin.Context) {
 	var friends []friend
 
@@ -216,4 +234,16 @@ func getFriends(con *gin.Context) {
 	rows.Close()
 
 	con.JSON(http.StatusOK, friends)
+}
+
+func postFriend(con *gin.Context) {
+	var fri friend
+
+	err := con.BindJSON(&fri)
+	checkErr(err)
+
+	_, err = db.Exec("INSERT INTO friends VALUES (?, ?, ?)", nil, fri.User1, fri.User2)
+	checkErr(err)
+
+	con.JSON(http.StatusCreated, fri)
 }
