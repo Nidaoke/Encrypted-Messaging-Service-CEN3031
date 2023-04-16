@@ -30,6 +30,18 @@ type message struct {
 	Message string `json:"message"`
 }
 
+type request struct {
+  Id int `json:"id"`
+  Sentfrom string `json:"sentfrom"`
+  Sentto string `json:"sentto"`
+}
+
+type friend struct {
+  Id int `json:"id"`
+  User1 string `json:"user1"`
+  User2 string `json:"user2"`
+}
+
 func main() {
 	var err error
 	db, err = sql.Open("sqlite3", "./database.db")
@@ -59,9 +71,11 @@ func main() {
 	router.GET("/", getAccounts)
 	router.POST("/", postAccount)
 	router.GET("/messages", getMessages)
-  router.GET("/messages/:name", getMessage1);
+  router.GET("/messages/:name", getMessage1)
   router.GET("/messages/:name/:name2", getMessage2)
 	router.POST("/messages", postMessage)
+  router.GET("/requests", getRequests)
+  router.GET("/friends", getFriends)
 	router.Run("localhost:9000")
 }
 
@@ -168,4 +182,38 @@ func postMessage(con *gin.Context) {
 	checkErr(err)
 
 	con.JSON(http.StatusCreated, mes)
+}
+
+func getRequests(con *gin.Context) {
+	var requests []request
+
+	rows, err := db.Query("SELECT * FROM requests")
+	checkErr(err)
+
+	for rows.Next() {
+		var req request
+		err := rows.Scan(&req.Id, &req.Sentfrom, &req.Sentto)
+		checkErr(err)
+		requests = append(requests, req)
+	}
+	rows.Close()
+
+	con.JSON(http.StatusOK, requests)
+}
+
+func getFriends(con *gin.Context) {
+	var friends []friend
+
+	rows, err := db.Query("SELECT * FROM friends")
+	checkErr(err)
+
+	for rows.Next() {
+		var fri friend
+		err := rows.Scan(&fri.Id, &fri.User1, &fri.User2)
+		checkErr(err)
+		friends = append(friends, fri)
+	}
+	rows.Close()
+
+	con.JSON(http.StatusOK, friends)
 }
