@@ -77,6 +77,8 @@ func main() {
 	router.POST("/messages", postMessage)
 
   router.GET("/requests", getRequests)
+  router.GET("/requests/from/:name", getRequestFrom)
+  router.GET("/requests/to/:name", getRequestTo)
   router.POST("/requests", postRequest)
 
   router.GET("/friends", getFriends)
@@ -194,6 +196,42 @@ func getRequests(con *gin.Context) {
 	var requests []request
 
 	rows, err := db.Query("SELECT * FROM requests")
+	checkErr(err)
+
+	for rows.Next() {
+		var req request
+		err := rows.Scan(&req.Id, &req.Sentfrom, &req.Sentto)
+		checkErr(err)
+		requests = append(requests, req)
+	}
+	rows.Close()
+
+	con.JSON(http.StatusOK, requests)
+}
+
+func getRequestFrom(con *gin.Context) {
+	var requests []request
+  name := con.Param("name");
+
+	rows, err := db.Query("SELECT * FROM requests WHERE (\"sentfrom\"==?)", name);
+	checkErr(err)
+
+	for rows.Next() {
+		var req request
+		err := rows.Scan(&req.Id, &req.Sentfrom, &req.Sentto)
+		checkErr(err)
+		requests = append(requests, req)
+	}
+	rows.Close()
+
+	con.JSON(http.StatusOK, requests)
+}
+
+func getRequestTo(con *gin.Context) {
+	var requests []request
+  name := con.Param("name");
+
+	rows, err := db.Query("SELECT * FROM requests WHERE (\"sentto\"==?)", name);
 	checkErr(err)
 
 	for rows.Next() {
