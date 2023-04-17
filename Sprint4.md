@@ -1,35 +1,28 @@
 # Sprint 4 Video:
-    Video Link
+    
 # Progress
-    Progress
+    From Sprint 2, the signup/login page is now more refined. 
+    There is a Forget Password feature now implemented but will need further refinement. 
+    A homepage that doubles as a chatroom is created and messages are now able to be sent. There is a search bar that will later be able to autofill a
+    user's friends for selection. Additionally, the messages are able to be stored in the backend successfully. Tester1 and Tester2 are dummy accounts 
+    made for this purpose.
+    The goal for next sprint is to be able to send/store longer messages, refine the visuals of various components, connect/route everything
+    together, and hopefully get to the authentification during sign up.
 
 # Unit Tests
 ## Backend
-#### GetAccounts:
-    The GetAccounts unit tests have been broken up into multiple tests. The first, TestGetAccountsCount, verifies that the number of results returned
-    from GetAccounts is equal to the number of accounts in the backend's database. The second, TestGetAccountsContent, verifies that the
-    GetAccounts function returns the proper data types, and that the data filled within the form is accurate (to the last account added).
-#### PostAccount:
-    Additionally, the PostAccount tests have been broken up as well. The first, TestPostAccountCount, verifies that the number of accounts stored
-    in the database increases by one when PostAccount is called (and does not return an error), essentially verifying that an account was added.
-    The second, TestPostAccountContent, verifies that the data added to the database is accurately representative of the input data given
-    when PostAccount is called (that the username, password, and email all match).
-#### GetMessages:
-    The first of the GetMessages tests is TestGetMessagesCount, which verifies that the number of messages in the database is equal to the number
-    of items returned by the GetMessages function. The second, TestGetMessagesContent, verifies that the GetMessages function returns the
-    proper data types, and that the data filled within the form is accurate (to the last message added).
-#### PostMessage:
-    For this function, TestPostMessage was created to test the functionality of posting a message from and to users. First the unit test opens a database already filled with the tables 'accounts' and 'messages'. It then executes inserting a predestined message between two users. We then keep track of that ID value so we can delete that insert at the end of the test. Next we query and search through each row using a for loop with an if statement that find that message and who it is between. Finally we delete the entry entered earlier.
-#### GetMessages1:
-    The first of the GetMessages1 tests is TestGetMessages1Count, which verifies that the GetMessages1 function returns a list with the same size
-    as the number of messages in the database with the specified user as either the sender or receiver. The second of the GetMessages1 tests is
-    TestGetMessages1Content, which verifies that the GetMessages1 function returns the information of the last message sent by or two the specified
-    user is correct. Specifically, it makes sure that the message contents of the last message by or to that user in the database equals the 
-    message contents of the last item returned by the function.
-#### GetMessages2:
-    All of the same tests for GetMessages1 exist for GetMessages2; that is, TestGetMessages2Count and TestGetMessages2Content. The only difference
-    is that these tests specifically verify the count and content of the messages in the database vs those returned by the GetMessages2Function
-    based on the two users specified by the function call path, as opposed to just the one user specified in GetMessages1.
+#### GetRequests:
+    
+#### GetRequestsFrom:
+    
+#### GetRequestsTo:
+    
+#### PostRequests:
+    
+#### GetFriends:
+    
+#### PostFriend:
+    
 ## Frontend
 #### Cypress Tests:
     spec: Building off of Sprint 2's Cypress Test, this one checks to see if a user is able to sign up and be redirected to a Patrick profile page. 
@@ -260,3 +253,115 @@
         this is at localhost:9000/messages), whilst passing along a JSON field representing the parameters discussed in the Input section (must
         include the usernames of both the sender and the receiver and the message contents, capped at 200 characters). The client can be prepared
         to receive a field representing the message that was just created, but this is not necessary.
+
+## GetRequests:
+    Description:
+        
+        
+    Request:
+        
+        
+    HTTP Type:
+        
+        
+    Input:
+        
+        
+    Output:
+        
+
+    Usage:
+
+
+## GetRequestsFrom:
+    Description:
+        
+        
+    Request:
+        
+        
+    HTTP Type:
+        
+        
+    Input:
+        
+        
+    Output:
+        
+
+    Usage:
+        
+## GetRequestsTo:
+    Description:
+        
+        
+    Request:
+        
+        
+    HTTP Type:
+        
+        
+    Input:
+        
+        
+    Output:
+        
+
+    Usage:
+
+
+## PostRequests:
+    Description:
+        
+        
+    Request:
+        
+        
+    HTTP Type:
+        
+        
+    Input:
+        
+        
+    Output:
+        
+
+    Usage:
+
+
+## GetFriends:
+    Description:
+        
+        
+    Request:
+        
+        
+    HTTP Type:
+        
+        
+    Input:
+        
+        
+    Output:
+        
+
+    Usage:
+
+
+## PostFriend:
+    Description:
+        
+        
+    Request:
+        
+        
+    HTTP Type:
+        
+        
+    Input:
+        
+        
+    Output:
+        
+
+    Usage:
