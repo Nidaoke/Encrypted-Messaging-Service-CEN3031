@@ -42,6 +42,10 @@ type friend struct {
   User2 string `json:"user2"`
 }
 
+type friendView struct {
+  Name string `json:"name"`
+}
+
 func main() {
 	var err error
 	db, err = sql.Open("sqlite3", "./database.db")
@@ -82,6 +86,7 @@ func main() {
   router.POST("/requests", postRequest)
 
   router.GET("/friends", getFriends)
+  router.GET("/friends/:name", getFriends1)
   router.POST("/friends", postFriend)
 
 	router.Run("localhost:9000")
@@ -272,6 +277,30 @@ func getFriends(con *gin.Context) {
 	rows.Close()
 
 	con.JSON(http.StatusOK, friends)
+}
+
+func getFriends1(con *gin.Context){
+  var friends []friendView
+  name := con.Param("name")
+
+  rows, err := db.Query("SELECT * FROM friends WHERE \"user1\" == ? OR \"user2\" == ?", name, name)
+  checkErr(err)
+
+  for rows.Next() {
+    var rel friend
+    var fri friendView
+    err := rows.Scan(&rel.Id, &rel.User1, &rel.User2)
+    checkErr(err)
+    if(rel.User1==name) {
+      fri.Name = rel.User2
+    }else {
+      fri.Name = rel.User1
+    }
+    friends = append(friends, fri)
+  }
+  rows.Close()
+
+  con.JSON(http.StatusOK, friends)
 }
 
 func postFriend(con *gin.Context) {
