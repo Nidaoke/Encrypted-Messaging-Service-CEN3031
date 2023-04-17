@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-type Tests struct {
-}
+//type Tests struct {
+//}
 
 func TestGetMessages(t *testing.T) {
 	fmt.Println("START GET MESSAGES TEST")
