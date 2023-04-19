@@ -11,13 +11,18 @@ This application uses **Angular** for the front-end and **Go** for the backend. 
 Our team is composed of four members. [Jonathan Cunningham](https://github.com/Nidaoke) and [Marcus Lugrand](https://github.com/marcuslugrand) will be working on the back-end, while [Henry Rivero-Vera](https://github.com/henryriverovera) and [Karen Liu](https://github.com/KareO2) will be working on the front-end. For the purpose of the course, our group on Canvas is Group 6.
 
 # Set-up
-Required installments: Angular 13 for front, Go for back.
-May also need to install CLI if not done so to run Angular.
+Required installments: Angular 13 for front, Go for back. 
+(May also need to install CLI if not done so to run Angular.)
 
 ## Step 1
-Open the project in the terminal with the correct directory and boot up the backend first. 
--> cd web (and press tab. This should bring you to the right section)
-In the terminal, execute the command 'go run .' to boot up in localhost:9000
+  Open the project in the terminal with the correct directory and boot up the backend first. 
+  -> cd web (and press tab. This should bring you to the right section)
+  In the terminal, execute the command 'go run .' to boot up in localhost:9000
 
 ## Step 2
-Once the backend is loaded, open a new terminal to the project and execute command 'ng serve' to start the project at localhost:4200
+  Once the backend is loaded, open a new terminal to the project and execute command 'ng serve' to start the project at localhost:4200
+
+## Routes
+  * **/home** Goes to the message home page 
+  * **/profile** Goes to profile page for personal account editing
+  * **/forget** Goes to the forget-password page to reset password and authentification
