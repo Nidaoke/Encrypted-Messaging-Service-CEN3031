@@ -11,7 +11,7 @@ This application uses **Angular** for the front-end and **Go** for the backend. 
 Our team is composed of four members. [Jonathan Cunningham](https://github.com/Nidaoke) and [Marcus Lugrand](https://github.com/marcuslugrand) will be working on the back-end, while [Henry Rivero-Vera](https://github.com/henryriverovera) and [Karen Liu](https://github.com/KareO2) will be working on the front-end. For the purpose of the course, our group on Canvas is Group 6.
 
 # Set-up
-Required installments: Angular 13 for front, Go for back
+Required installments: Angular 13 for front, Go for back.
 May also need to install CLI if not done so to run Angular.
 
 ## Step 1
