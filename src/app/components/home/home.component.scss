@@ -33,13 +33,16 @@ body {
     }
 
     /* style the search input */
+    .search-input > mat-form-field {
+      width: 100%;
+    }
     .search-input {
       margin: 24px; /* set margin around the search input */
-      width: auto;
     }
   }
 
   > .messages {
+      position: relative;
       width: 60%; /* width of the chat interface */
       padding: 24px;
       margin: 16px;
@@ -49,44 +52,49 @@ body {
 
       /* style the input area */
       .input-area > mat-form-field {
-        width: 190%
-        //background I want to fill but it's also fine as it is
+        width: 100%; /* set the width of the mat form field to 100% */
       }
 
       .input-area {
         position: absolute; /* forever at the bottom */
-        padding-top: calc(100vh - 160px); /* distance from top of screen to input area */
+        padding-top: calc(100vh - 150px); /* distance from top of screen to input area */
         bottom: 0;
-        padding-bottom: 8px;
-
+        left: 0;
+        right: 0;
+        padding: 8px; /* add padding to the input area */
+        width: 100%; /* set the width of the input area to 100% */
+        box-sizing: border-box; /* include padding and border in width calculation */
       }
 
       /* style the chat area */
       .chat-area {
         overflow-y: auto; /* enable vertical scrolling */
         padding: 16px; /* add padding to prevent chat messages from touching the edges */
-        height: calc(100vh - 170px); /* height of the chat area */
+        height: calc(100vh - 180px); /* height of the chat area */
         display: flex; /* use flexbox for layout */
         flex-direction: column; /* stack chat messages vertically */
-        align-items: flex-start; /* align chat messages to the left side */
         background: rgb(255, 255, 255); /* background color of the chat area */
+        align-items: flex-end;
 
         /* style individual chat messages */
         .chat-message {
           position: relative;
-          align-self: flex-front;
+          justify-content: center;
           display: inline-block;
           padding: 8px 16px;
           border-radius: 16px; /* rounded corners of chat messages */
           margin-bottom: 8px; /* spacing between chat messages */
           background-color: #f1f0f0; /* background color of sent messages */
+          align-self: flex-end;
 
           /* align received messages to the right side */
           &.received {
-            align-self: flex-end;
+            position: relative;
+            align-self: flex-start;
             background-color: #c283ca;
             color: white;
           }
+
         }
       }
 

@@ -17,16 +17,17 @@
             />
           </mat-form-field>
 
+          <!-- baby drop down for testing -->
           <mat-autocomplete #users="matAutocomplete">
             <mat-option>Testerbaby</mat-option>
           </mat-autocomplete>
 
           <!-- Autocomplete dropdown to show search results of friends -->
-          <!-- <mat-autocomplete #users="matAutocomplete">
+          <mat-autocomplete #users="matAutocomplete">
             <mat-option *ngFor="let friend of friends" [value]="friend.name">
               {{ friend.name }}
             </mat-option>
-          </mat-autocomplete> -->
+          </mat-autocomplete>
         </div>
 
         <!-- Display list of friends -->
@@ -58,7 +59,7 @@
 
                 <!-- Check if the message is sent by the user -->
                 <div class="chat-message" *ngIf="message.from === currentUser">
-                  <p>You: {{ message.message }}</p>
+                  <p>{{ message.message }}</p>
                 </div>
                 <!-- Check if the message is received by the user -->
                 <div class="chat-message received" *ngIf="message.to === currentUser">
