@@ -113,3 +113,17 @@ body {
       }
   }
 }
+
+.btn {
+  background-color: #6f6b9c;
+  border: none;
+  border-radius: 5%;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #6d44b8;
+}

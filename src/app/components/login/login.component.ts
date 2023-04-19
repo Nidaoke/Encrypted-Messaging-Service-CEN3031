@@ -77,6 +77,22 @@ export class LoginComponent implements OnInit {
     //if found, load up that person's homepage
     //if not, prompt for Sign Up (alert form)
 
+    const url = 'http://localhost:9000/login';
+    const username = this.loginForm.get('username')!.value;
+    const password = this.loginForm.get('password')!.value;
+
+    this.http.post(url, { username, password }).subscribe(
+      (response) => {
+        // Successful authentication, redirect to the home page or user profile
+        console.log('Authentication successful', response);
+        this.router.navigate(['/home']);
+      },
+      (error) => {
+        // Failed authentication, show an error message
+        console.log('Authentication failed', error);
+        alert('Invalid username or password');
+      }
+    );
   }
 
 }
