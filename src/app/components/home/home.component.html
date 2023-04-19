@@ -16,12 +16,17 @@
               formControlName="searchControll"
             />
           </mat-form-field>
-          <!-- Autocomplete dropdown to show search results of friends -->
+
           <mat-autocomplete #users="matAutocomplete">
+            <mat-option>Testerbaby</mat-option>
+          </mat-autocomplete>
+
+          <!-- Autocomplete dropdown to show search results of friends -->
+          <!-- <mat-autocomplete #users="matAutocomplete">
             <mat-option *ngFor="let friend of friends" [value]="friend.name">
               {{ friend.name }}
             </mat-option>
-          </mat-autocomplete>
+          </mat-autocomplete> -->
         </div>
 
         <!-- Display list of friends -->

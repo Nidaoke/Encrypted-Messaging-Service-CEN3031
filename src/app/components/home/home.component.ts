@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
   //retreive from back to show up in chat
   ngOnInit():void {
     //friends to show up on side
-    this.getFriends();
+    //this.getFriends();
 
     //chat to show up
     this.getChat();
@@ -55,12 +55,12 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  //retreives friends from backend
-  getFriends(){
-    this.http.get<any[]>(`/friends/${this.currentUser}`).subscribe((response) => {
-      this.friends = response;
-    });
-  }
+  // //retreives friends from backend
+  // getFriends(){
+  //   this.http.get<any[]>(`/friends/${this.currentUser}`).subscribe((response) => {
+  //     this.friends = response;
+  //   });
+  // }
 
   //sending the messages to the backend
   sendMessage() {
