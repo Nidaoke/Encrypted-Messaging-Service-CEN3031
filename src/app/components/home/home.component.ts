@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
     this.getChat();
   }
 
-  //retreive meesages from backend
+  //retreive messages from backend
   getChat(){
     this.chatService.getChatMessages().subscribe(
       (messages: ChatMessage[]) => {
