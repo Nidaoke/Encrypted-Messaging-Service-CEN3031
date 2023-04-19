@@ -22,10 +22,10 @@ export class HomeComponent implements OnInit {
   messageControl = new FormControl('');
   chatListControl = new FormControl('');
   chatMessages!: ChatMessage[];
-  currentUser: string = 'Tester1';
+  friends: any[] = []; // initialize friendsList as an empty array
 
-  //backend url
-  url = 'http://localhost:9000/messages';
+  //for testing purposes this is base profile
+  currentUser: string = 'Tester1';
 
   constructor(
     private http: HttpClient,
@@ -36,9 +36,17 @@ export class HomeComponent implements OnInit {
 
   //retreive from back to show up in chat
   ngOnInit():void {
+    //friends to show up on side
+    this.getFriends();
+
+    //chat to show up
+    this.getChat();
+  }
+
+  //retreive meesages from backend
+  getChat(){
     this.chatService.getChatMessages().subscribe(
       (messages: ChatMessage[]) => {
-
         this.chatMessages = messages;
       },
       (error: any) => {
@@ -47,6 +55,12 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  //retreives friends from backend
+  getFriends(){
+    this.http.get<any[]>(`/friends/${this.currentUser}`).subscribe((response) => {
+      this.friends = response;
+    });
+  }
 
   //sending the messages to the backend
   sendMessage() {

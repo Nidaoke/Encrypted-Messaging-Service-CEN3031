@@ -5,6 +5,7 @@
   <body>
     <div class="container">
       <div class="chat-list" mat-elevation-z5>
+        <!-- Search input to find friends -->
         <div class="search-input">
           <mat-form-field>
             <input
@@ -15,12 +16,34 @@
               formControlName="searchControll"
             />
           </mat-form-field>
+          <!-- Autocomplete dropdown to show search results of friends -->
           <mat-autocomplete #users="matAutocomplete">
-            <mat-option>Testerbaby</mat-option>
+            <mat-option *ngFor="let friend of friends" [value]="friend.name">
+              {{ friend.name }}
+            </mat-option>
           </mat-autocomplete>
         </div>
-      </div>
 
+        <!-- Display list of friends -->
+        <div class="friends-list">
+          <div class="friend" *ngFor="let friend of friends">
+            <div class="friends-info">
+              <div class="friends-name">{{friend.name}}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Display friends like a chat
+        <div class="friends-chat">
+          <div class="friend-chat" *ngFor="let friend of friends">
+            <div class="chat-message received">
+              <div class="chat-name">{{ friend.name }}</div>
+              <div class="chat-date">{{ friend.lastActive }}</div>
+              <div class="chat-text">{{ friend.status }}</div>
+            </div>
+          </div>
+        </div> -->
+      </div>
       <div class="messages" mat-elevation-z5>
         <div class="chat-area">
             <ng-container>
