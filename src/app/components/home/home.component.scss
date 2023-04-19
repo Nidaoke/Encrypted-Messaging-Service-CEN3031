@@ -61,14 +61,11 @@ body {
              height: 35px;
          }
 
-         > h2 {
-            margin: 0;
-         }
       }
 
       .input-area > mat-form-field {
         width: 100%
-        //background: #cdcdce
+        //background I want to fill but it's also fine as it is
       }
 
       .input-area {
@@ -79,42 +76,45 @@ body {
 
       .chat-area {
           height: calc(100vh - 160px);
-          // display: flex;
-          // flex-direction: column;
-          // align-items: flex-start;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
           background: rgb(255, 255, 255);
 
-           //overflow: auto;
+          .chat-message {
+            position: relative;
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 16px;
+            margin-bottom: 8px;
+            background-color: #f1f0f0;
+          }
 
-      //     > :first-child {
-      //         margin-top: auto;
-      //     }
+          .chat-message::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -10px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-right: 10px solid #f1f0f0;
+            border-bottom: 10px solid transparent;
+            transform: translateY(-50%);
+          }
 
-      //     .chat-bubble-container {
-      //         display: flex;
-      //         width: 100%;
-      //         justify-content: flex-start;
+          .chat-message.received {
+            align-self: flex-end;
+            background-color: #1e88e5;
+            color: white;
+          }
 
-      //         > .chat-bubble {
-      //             background: white;
-      //             padding-top: 8px;
-      //             padding-bottom: 18px;
-      //             padding-left: 8px;
-      //             padding-right: 100px;
-      //             margin-bottom: 16px;
-      //             border-radius: 8px;
-      //             width: fit-content;
-
-      //             position: relative;
-      //         }
-      //     }
-
-      //     .chat-bubble-container.sender {
-      //         justify-content: flex-end;
-      //         > .chat-bubble {
-      //             background: #c5cae9;
-      //         }
-      //     }
+          .chat-message.received::before {
+            left: auto;
+            right: -10px;
+            border-right: 10px solid #1e88e5;
+            border-left: 10px solid transparent;
+          }
        }
   }
 

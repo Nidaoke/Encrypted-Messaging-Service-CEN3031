@@ -24,29 +24,33 @@
       <div class="messages" mat-elevation-z5>
         <div class="chat-area">
             <ng-container>
-              <div class="chat-bubble">
-                <ul>
-                  <li *ngFor="let item of chatList; let i=index">
-                    {{i}} - {{item.msg}}
-                  </li>
-                </ul>
+
+              <div class="chat-bubble" *ngFor="let message of chatMessages">
+                <div class="chat-message received">
+                  <p>This is testing receiving</p>
+                </div>
+                <div class="chat-message">
+                  <p>{{ message.from }}: {{ message.message }}</p>
+                </div>
               </div>
+
             </ng-container>
           <div #endOfChat></div>
+        </div>
 
         <div class="input-area">
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" padding="">
             <input matInput placeholder="Enter your message..."
-            [formControl]="messageControl"
-            formControlName="messageControll"
-            (keydown.enter)="sendMessage()"/>
+              [formControl]="messageControl"
+              formControlName="messageControll"
+              (keydown.enter)="sendMessage()"/>
+
             <button mat-icon-button matSuffix (click)="sendMessage()">
               <mat-icon>send</mat-icon>
             </button>
           </mat-form-field>
         </div>
       </div>
-    </div>
     </div>
   </body>
 </html>
