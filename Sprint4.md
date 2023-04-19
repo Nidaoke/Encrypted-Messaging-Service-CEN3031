@@ -6,6 +6,8 @@
     A homepage that doubles as a chatroom is created and messages are now able to be sent. There is a search bar that will later be able to autofill a
     user's friends for selection. Additionally, the messages are able to be stored in the backend successfully. Tester1 and Tester2 are dummy accounts 
     made for this purpose.
+    The backend-database has been setup to allow for friend requests to be sent between users, and relationships established between them.
+    This allows for users to target their messages and view them between specific friends that they have mutually added.
     The goal for next sprint is to be able to send/store longer messages, refine the visuals of various components, connect/route everything
     together, and hopefully get to the authentification during sign up.
 
@@ -256,112 +258,200 @@
 
 ## GetRequests:
     Description:
-        
+        Returns a JSON array of all the requests in the format detailed in Output. This includes the usernames of the senders and recipients,
+        as well as a numerical ID representing each request. The list is returned in the order that the requests were sent (first ever sent request
+        to be sent will be at index 0), and the IDs are all in the order that the requests were sent (first ever request to be sent will have an ID
+        of 0). This can be used to see how many requests have been sent on the platform, for seeing how many requests a user has sent, for seeing
+        how many unaccepted requests a user has, and for measuring the request to friendship (accepted requests) ratio.
         
     Request:
-        
+        localhost:9000/requests
         
     HTTP Type:
-        
+        GET
         
     Input:
-        
+        Null - As this is a GET request, there is no input to be provided.
         
     Output:
-        
+        JSON Array of all users' requests in the following format:
+            int 'id', string 'sentfrom', string'sentto
+            Here, the ID represents the numerical id (order) of the request, sentfrom represents the sender of the request, sentto represents
+            the recipient of the request.
+        HTTP 200
 
     Usage:
-
+        For this method, the client should make an HTTP GET request to port 9000 of the server with an additional path of /requests (currently,
+        this is at localhost:9000/requests). The client should be prepared to receive a list in the form of a JSON array, with each element
+        containing three attributes, one integer called 'id', one string called 'sentfrom', and one string called 'sentto'.
 
 ## GetRequestsFrom:
     Description:
-        
+        Returns a JSON array of all the requests that were sent from one specific user in the format detailed in Output (more specifically,
+        their usernames). This includes the usernames of the users who the requests were sent to. The list does not include an ID, though
+        the IDs of the requests can be reverse tracked from GetRequests. The list is however still returned in the order that the requests
+        were sent due to how the database is stored (first ever request sent by the specified user will be at index 0). This can be used
+        to display to a user how many outgoing friend requests they have, and to whom those requests were sent. It can also be used to calculate
+        the ratio between a user's outgoing and ingoing requests, or to see how many requests they have sent in relation to how many friends they
+        have or how many of their sent requests have been accepted.
         
     Request:
-        
+        localhost:9000/requests/from/name
+        Where name is the username of some user.
+        E.g. localhost:9000/requests/from/jdikon37beforestbonanza1300and47touchdown would be the path to send a GET request to obtain a list of all
+        the requests that have a 'sentfrom' value equal to "jdikon37beforestbonanza1300and47touchdown".
         
     HTTP Type:
-        
+        GET
         
     Input:
-        
+        Null - As this is a GET request, there is no input to be provided (the username is supplied in the path).
         
     Output:
+        JSON array of all users' requests where the 'sentfrom' field is equivalent to the username specified in the path in the following format:
+            string 'name'
+            Here, 'name' represents the username of the user for whom the request was sent out for. Note here that 'name' has a maximum of 64
+            characters, which is in-line with the maximum character field choice during user account creation. 
+        HTTP 200
         
-
     Usage:
+        For this method, the client should make an HTTP GET request to port 9000 of the server with an additional path of /requests/from/name,
+        where name is the username of the user that the client wants to collect the requests that were sent from said user (currently, this is at
+        localhost:9000/requests/name where name is the username of the user that the client wants to collect the requests that were sent from said
+        user). The client should be prepared to receive a list in the form of a JSON array, where each element contains only one single attribute,
+        one string called 'name' representing the username of the user for whom each request was sent to.
         
 ## GetRequestsTo:
     Description:
-        
+        Returns a JSON array of all the requests that were sent to one specific user in the format detailed in Output (more specifically,
+        their usernames). This includes the usernames of the users who the requests were sent from. The list does not include an ID, though
+        the IDs of the requests can be reverse tracked from GetRequests. The list is however still returned in the order that the requests
+        were sent due to how the database is stored (first ever request sent to the specified user will be at index 0). This can be used
+        to display to a user how many incoming friend requests they have, and from whom those requests were sent. It can also be used to calculate
+        the ratio between a user's incoming and outgoing requests, or to see how many requests they have been sent in relation to how many friends
+        they have or how many of their received requests have yet to be accepted.
         
     Request:
-        
+        localhost:9000/requests/to/name
+        Where name is the username of some user.
+        E.g. localhost:9000/requests/to/jdikon37beforestbonanza1300and47touchdown would be the path to send a GET request to obtain a list of all
+        the requests that have a 'sentto' value equal to "jdikon37beforestbonanza1300and47touchdown".
         
     HTTP Type:
-        
+        GET
         
     Input:
-        
+        Null - As this is a GET request, there is no input to be provided (the username is supplied in the path).
         
     Output:
+        JSON array of all users' requests where the 'sentto' field is equivalent to the username specified in the path in the following format:
+            string 'name'
+            Here, 'name' represents the username of the user from whom the request was sent. Note here that 'name' has a maximum of 64
+            characters, which is in-line with the maximum character field choice during user account creation. 
+        HTTP 200
         
-
     Usage:
-
+        For this method, the client should make an HTTP GET request to port 9000 of the server with an additional path of /requests/to/name,
+        where name is the username of the user that the client wants to collect the requests that were sent to said user (currently, this is at
+        localhost:9000/requests/name where name is the username of the user that the client wants to collect the requests that were sent to said
+        user). The client should be prepared to receive a list in the form of a JSON array, where each element contains only one single attribute,
+        one string called 'name' representing the username of the user from whom each request was sent.
 
 ## PostRequests:
     Description:
-        
+        Allows for the addition of a request to the list of all requests in the database. Essentially, this is used to update the database when
+        one user on the platform sends out a request to another user of the platform, but can also be used for testing purposes (like testing CURL
+        methods in the backend). Then this POST request is made, two usernames representing both the sender and the receiver of the request,
+        both of which must be supplied, or else an error will be thrown from the backend. This method will also return the JSON field representing
+        the request that was just created.
         
     Request:
-        
+        localhost:9000/requests
         
     HTTP Type:
-        
+        POST
         
     Input:
-        
+        JSON field in the following format:
+            string 'sentfrom', string 'sentto'
+            Here, sentfrom represents the username of the user who is sending the request, and sentto represents the username of the username who is
+            receiving the request. Note here that each username must be capped to 64 characters, which should not pose a problem as user accounts
+            have a maximum username length of 64 characters.
         
     Output:
+        JSON field in the following format:
+            int 'id', string 'sentfrom', string 'sentto'
+            Here, id represents the numerical id of this request, sentfrom represents the username of the user who is sending the request, sentto
+            represents the username of the user who is receiving the request. Note here that each username must be capped to 64 characters, which
+            should not pose a problem as user accounts have a maximum username length of 64 characters.
+        HTTP 201
         
-
-    Usage:
-
+    Usage: 
+        For this method, the client should make an HTTP POST request to port 9000 of the server with an additional path of /requests (currently
+        this is at localhost:9000/requests), whilst passing along a JSON field representing the parameters discussed in the Input section (must
+        include the usernames of both the sender and the receiver of the request, each of which are capped at 64 characters). The client can
+        be prepared to receive a field representing the request that was just created, but this is not necessary.
 
 ## GetFriends:
     Description:
-        
+        Returns a JSON array of all the friend-relationships in the format detailed in Output. This includes the usernames of each of the friends
+        in the pair, as well as a numerical ID representing each friendship. The list is returned in the order that the friend requests were accepted
+        (first ever accepted request to be sent will be at index 0), and the IDs are all in the order that the friend requests were accepted
+        (first ever request to be accepted will have an ID of 0). This can be used to see how many requests have been accepted on the platform, for
+        seeing how many friends a user has, and for seeing who some user is friended to.
         
     Request:
-        
+        localhost:9000/friends
         
     HTTP Type:
-        
+        GET
         
     Input:
-        
+        Null - As this is a GET request, there is no input to be provided.
         
     Output:
-        
+        JSON Array of all users' friendships in the following format:
+            int 'id', string 'user1', string 'user2'
+            Here, the ID represents the numerical id (order) of the friend-relationship, user1 and user2 each represent the usernames of the users
+            in the friendship, in ambiguous order-pairing.
+        HTTP 200
 
     Usage:
-
+        For this method, the client should make an HTTP GET request to port 9000 of the server with an additional path of /friends (currently,
+        this is at localhost:9000/friends). The client should be prepared to receive a list in the form of a JSON array, with each element
+        containing three attributes, one integer called 'id', one string called 'user1', and one string called 'user2'.
 
 ## PostFriend:
     Description:
-        
+        Allows for the addition of a friend-relationship to the list of all friendship pairs in the database. Essentially, this is used to update
+        the database when one user on the platform accepts a request from another user of the platform, but can also be used for testing purposes
+        (like testing CURL methods in the backend). Then this POST request is made, two usernames representing the pair of friends that have
+        accepted each other's requests, both of which must be supplied, or else an error will be thrown from the backend. This method will also return
+        the JSON field representing the friendship relationship pair that was just created.
         
     Request:
-        
+        localhost:9000/friends
         
     HTTP Type:
-        
+        POST
         
     Input:
-        
+        JSON field in the following format:
+            string 'user1', string 'user2'
+            Here, user1 and user2 both represents the usernames of the two usernames who have accepted each other's friend requests (in ambiguous
+            ordering). Note here that each username must be capped to 64 characters, which should not pose a problem as user accounts
+            have a maximum username length of 64 characters.
         
     Output:
+        JSON field in the following format:
+            int 'id', string 'user1', string 'user2'
+            Here, id represents the numerical id of this friendship relationship pair, and user1 and user2 both represent the usernames of the two users
+            who have accepted each other's friend requests. Note here that each username must be capped to 64 characters, which should not pose a problem
+            as user accounts have a maximum username length of 64 characters.
+        HTTP 201
         
-
-    Usage:
+    Usage: 
+        For this method, the client should make an HTTP POST request to port 9000 of the server with an additional path of /friends (currently
+        this is at localhost:9000/friends), whilst passing along a JSON field representing the parameters discussed in the Input section (must
+        include the usernames of both of the users represented by the new friendship relationship, each of which are capped at 64 characters).
+        The client can be prepared to receive a field representing the friendship relationship pair that was just formed, but this is not necessary.
