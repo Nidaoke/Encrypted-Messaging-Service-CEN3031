@@ -25,11 +25,15 @@
         <div class="chat-area">
             <ng-container>
 
+              <!-- Loop through each message -->
               <div class="chat-bubble" *ngFor="let message of chatMessages">
-                <div class="chat-message received">
-                  <p>This is testing receiving</p>
+
+                <!-- Check if the message is sent by the user -->
+                <div class="chat-message" *ngIf="message.from === currentUser">
+                  <p>You: {{ message.message }}</p>
                 </div>
-                <div class="chat-message">
+                <!-- Check if the message is received by the user -->
+                <div class="chat-message received" *ngIf="message.to === currentUser">
                   <p>{{ message.from }}: {{ message.message }}</p>
                 </div>
               </div>
@@ -38,6 +42,7 @@
           <div #endOfChat></div>
         </div>
 
+         <!-- Input area always at the bottom -->
         <div class="input-area">
           <mat-form-field appearance="outline" padding="">
             <input matInput placeholder="Enter your message..."

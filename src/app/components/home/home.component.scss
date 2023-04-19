@@ -2,15 +2,9 @@
 
 
 body {
-// 	margin: 0;
-// 	padding: 0;
-// 	display: flex;
-// 	justify-content: center;
-// 	align-items: center;
-// 	min-height: 100vh;
-// 	font-family: 'Jost', sans-serif;
  	background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
  }
+
 .container {
   display: flex;
   height: calc(100vh);
@@ -35,89 +29,75 @@ body {
           }
 
       }
-
       .search-input {
           margin: 24px;
       }
   }
 
-
   > .messages {
-      width: 60%;
+      width: 60%; /* width of the chat interface */
       padding: 24px;
       margin: 16px;
       margin-left: 8px;
-      border-radius: 16px;
-      background: #6f6b9c;
+      border-radius: 16px; /* rounded corners of the chat interface */
+      background: #6f6b9c; /* background color of the chat interface */
 
-      .messages-header {
-        display: flex;
-        margin-bottom: 8px;
-
-         > img {
-             border-radius: 50%;
-             object-fit: cover;
-             margin-right: 16px;
-             height: 35px;
-         }
-
-      }
-
+      /* style the input area */
       .input-area > mat-form-field {
         width: 100%
         //background I want to fill but it's also fine as it is
       }
 
       .input-area {
-        padding-top: calc(100vh - 150px);
+        position: absolute; /* forever at the bottom */
+        padding-top: calc(100vh - 200px); /* distance from top of screen to input area */
+        bottom: 0;
         padding-bottom: 8px;
-        //background: #cdcdce
       }
 
+      /* style the chat area */
       .chat-area {
-          height: calc(100vh - 160px);
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          background: rgb(255, 255, 255);
+        overflow-y: auto; /* enable vertical scrolling */
+        padding: 16px; /* add padding to prevent chat messages from touching the edges */
+        height: calc(100vh - 170px); /* height of the chat area */
+        display: flex; /* use flexbox for layout */
+        flex-direction: column; /* stack chat messages vertically */
+        align-items: flex-start; /* align chat messages to the left side */
+        background: rgb(255, 255, 255); /* background color of the chat area */
 
-          .chat-message {
-            position: relative;
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 16px;
-            margin-bottom: 8px;
-            background-color: #f1f0f0;
-          }
+        /* style individual chat messages */
+        .chat-message {
+          position: relative;
+          align-self: flex-front;
+          display: inline-block;
+          padding: 8px 16px;
+          border-radius: 16px; /* rounded corners of chat messages */
+          margin-bottom: 8px; /* spacing between chat messages */
+          background-color: #f1f0f0; /* background color of sent messages */
 
-          .chat-message::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: -10px;
-            width: 0;
-            height: 0;
-            border-top: 10px solid transparent;
-            border-right: 10px solid #f1f0f0;
-            border-bottom: 10px solid transparent;
-            transform: translateY(-50%);
-          }
-
-          .chat-message.received {
+          /* align received messages to the right side */
+          &.received {
             align-self: flex-end;
-            background-color: #1e88e5;
+            background-color: #c283ca;
             color: white;
           }
+        }
+      }
 
-          .chat-message.received::before {
-            left: auto;
-            right: -10px;
-            border-right: 10px solid #1e88e5;
-            border-left: 10px solid transparent;
-          }
-       }
+      //Scrolling stuff
+      .chat-area::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .chat-area::-webkit-scrollbar-thumb {
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 8px;
+      }
+
+      .chat-area::-webkit-scrollbar-track {
+        background-color: rgba(0,0,0,0.1);
+      }
   }
-
 }
 
 mat-form-field {

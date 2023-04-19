@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -21,22 +21,24 @@ export class HomeComponent implements OnInit {
   searchControl = new FormControl('');
   messageControl = new FormControl('');
   chatListControl = new FormControl('');
+  chatMessages!: ChatMessage[];
+  currentUser: string = 'Tester1';
 
   //backend url
   url = 'http://localhost:9000/messages';
 
-  chatMessages!: ChatMessage[];
-
   constructor(
     private http: HttpClient,
     private router: Router,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   //retreive from back to show up in chat
   ngOnInit():void {
     this.chatService.getChatMessages().subscribe(
       (messages: ChatMessage[]) => {
+
         this.chatMessages = messages;
       },
       (error: any) => {
@@ -47,16 +49,18 @@ export class HomeComponent implements OnInit {
 
 
   //sending the messages to the backend
-  //tester1 to tester 2 only so far - later need to modify to user to friend
   sendMessage() {
     const message = this.messageControl.value;
     const url = 'http://localhost:9000/messages';
 
     this.http.post(url, {
-      from: "Tester1",
-      to: "Tester2",
+      from: this.currentUser,
+      to: "Tester2",    //later change to friend
       message: JSON.stringify(message)
-    }).subscribe(() => this.messageControl.setValue(''));
+    }).subscribe(() =>{
+      this.messageControl.reset();
+      this.cdr.detectChanges(); // detect changes to update chat interface
+    });
   }
 
 }
