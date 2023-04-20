@@ -1,11 +1,14 @@
 # Sprint 4 Video:
-    
+    https://youtu.be/cSSLamW6N_s
 # Progress
-    From Sprint 2, the signup/login page is now more refined. 
-    There is a Forget Password feature now implemented but will need further refinement. 
-    A homepage that doubles as a chatroom is created and messages are now able to be sent. There is a search bar that will later be able to autofill a
-    user's friends for selection. Additionally, the messages are able to be stored in the backend successfully. Tester1 and Tester2 are dummy accounts 
-    made for this purpose.
+    From Sprint 3, the signup/login page is now more refined. Signup now checks to see if there is input in the form and if the username is already in
+    the backend. We ran into a login issue of going through even though we checked to verify in the back that both username and password are valid. It
+    was fixed later on.
+    The homepage that doubles as a chatroom is created and messages are now able to be sent. There is a search bar that will later be able to autofill a
+    user's friends for selection. Additionally, the messages are able to be stored in the backend successfully, and can be retrieved via correct users. 
+    They are also now color coded depending on if it's a message to or from. Tester1 and Tester2 are dummy accounts made for this purpose. A scroll 
+    bar has been added and the input area is locked at the bottom of the window, and everything resizes depending on the window size.
+    There is a Forget Password feature but it is not top priority so we focused more on the previous.
     The backend-database has been setup to allow for friend requests to be sent between users, and relationships established between them.
     This allows for users to target their messages and view them between specific friends that they have mutually added.
     Additionally, we've added some API functionality to ease the burdon of user authentication and verification from the frontend - more details can
@@ -32,19 +35,24 @@
 
 ## Frontend
 #### Cypress Tests:
-    spec: Building off of Sprint 2's Cypress Test, this one checks to see if a user is able to sign up and be redirected to a Patrick profile page. 
-    forget: This e2e test will slowly be filled out as we go on. Its end goal is to be able to send an authentification email and to change password successfully.
-        As of right now, since the "forget password" option in underneath the "Login" section, we are just trying to see if the login section is able to be pulled up.
+    spec: Building off of Sprint 3 Cypress Test, this one checks to see if a user is able to sign up, go to profile page, click 'Message,' and message Tester2. 
+    homesend: This was meant to 
+    forget: As of right now, since the "forget password" option in underneath the "Login" section, we are just trying to see if the login section is 
+    able to be pulled up.
 #### Login Component:
-    Checks that the login component page provides the 3 input boxes for user signup (username, email, and password) and the 2 input boxes for user login (username and password). It also checks that the signup and login buttons are provided and that they work.
+    The first unit test checks that the login component page provides the 3 input boxes for user signup (username, email, and password) and 
+      the 2 input boxes for user login (username and password). It also checks that the signup and login buttons are provided and that they work.
+    The second unit test checks to see if the 
 #### Forget Component:
-    Checks that the forget component page provides the 2 input boxes (username and email) for user password recovery and that recover button is provided to make the request.
+    Checks that the forget component page provides the 2 input boxes (username and email) for user password recovery and that recover button 
+    is provided to make the request.
 #### Profile Component:
     Checks that the profile component page provides the 2 buttons to either logout or send a message.
 #### Home Component:
     The first unit test is testing to see if the search bar is able to be clicked and if the autocomplete of "Testerbaby" would pop up. This is to make sure
         for future user friends it would pop their names up.
     The second unit test is testing to see if the input for the chat is able to be typed in. We had ran into the issue of not being able to click into the input.
+    The third unit test makes sure that a message can be tested and be sent via pressing enter. 
     
 
 # Backend API Documentation
