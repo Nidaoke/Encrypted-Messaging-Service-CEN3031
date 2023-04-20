@@ -455,3 +455,40 @@
         this is at localhost:9000/friends), whilst passing along a JSON field representing the parameters discussed in the Input section (must
         include the usernames of both of the users represented by the new friendship relationship, each of which are capped at 64 characters).
         The client can be prepared to receive a field representing the friendship relationship pair that was just formed, but this is not necessary.
+
+## CheckLogin:
+    Description:
+        Allows for the verification of some user's account status, particularly that of whether or not their account already exists, and if the
+        inputted password is the correct password to the user's account. Essentially, this is used for two main purposes. Firstly, during account
+        creation, the client needs to verify that the account being created does not already exist (the username has not been used yet), so this
+        function can be used for that purpose. Secondly, during the login-stage, the client needs to verify that the correct password has been used
+        and this function can be used to verify that as well. It is done with a POST request containing the username and password to be verified, 
+        and returns a string containing values detailed in Output.
+        
+    Request:
+        localhost:9000/checklogin
+        
+    HTTP Type:
+        POST
+        
+    Input:
+        JSON field in the following format:
+            string 'username', string 'password'
+            Here, username represents the username of the account that is to be verified, and password represents the password of the account to
+            be verified.
+        
+    Output:
+        JSON field in the following format:
+            string 'value'
+            Here, value represents the specific value of the returned string. It can have one of three different types: "baduser", "badpassword", and 
+            "goodpassword". "baduser" means that the inputted username does not have a correlated account in the database system. "badpassword" means that
+            the inputted password does not match the account that correlates to the matching username. "goodpassword" means that the user's account with the
+            matching username has been found, and the inputted password matches their chosen password.
+        HTTP 201
+        
+    Usage: 
+        For this method, the client should make an HTTP POST request to port 9000 of the server with an additional path of /checklogin (currently
+        this is at localhost:9000/checklogin), whilst passing along a JSON field representing the parameters discussed in the Input section (must
+        include the username and password of the account that the client is attempting to verify). The client should be prepared to receieve a field
+        representing the response to the account verification, particularly that of a JSON field with a 'value' attribute that stores some string
+        describing the results of the verification. This can be used for both account creation and logging in.
