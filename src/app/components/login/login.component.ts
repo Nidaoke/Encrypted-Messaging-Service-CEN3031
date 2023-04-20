@@ -59,11 +59,18 @@ export class LoginComponent implements OnInit {
     let formObj = this.signupForm.getRawValue();
     let serializedForm = JSON.stringify(formObj);
 
-    this.http.post(url, serializedForm).subscribe((data) => {
-      console.log(data);}
-    );
+    if (this.signupForm.valid && this.signupForm.controls['username'].valid && this.signupForm.controls['email'].valid && this.signupForm.controls['password'].valid)
+    {
+      this.http.post(url, serializedForm).subscribe((data) => {
+        console.log(data);}
+      );
 
-    this.router.navigate(['../profile']);
+      this.router.navigate(['../profile']);
+    }
+    else
+    {
+      alert('Empty Item');
+    }
 
     // this.authService.onSignUp(this.signupForm.value).subscribe((msg) => {
     //   console.log(msg);
