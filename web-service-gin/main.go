@@ -23,6 +23,11 @@ type account struct {
 	Email    string `json:"email"`
 }
 
+type accountLogin struct {
+  Username string `json:"username"`
+  Password string `json:"password"`
+}
+
 type message struct {
 	Id      int    `json:"id"`
 	From    string `json:"from"`
@@ -44,6 +49,10 @@ type friend struct {
 
 type friendView struct {
   Name string `json:"name"`
+}
+
+type stringReturn struct {
+  Value string `json:"value"`
 }
 
 func main() {
@@ -88,6 +97,8 @@ func main() {
   router.GET("/friends", getFriends)
   router.GET("/friends/:name", getFriends1)
   router.POST("/friends", postFriend)
+
+  router.POST("/checklogin", checkLogin)
 
 	router.Run("localhost:9000")
 }
@@ -313,4 +324,44 @@ func postFriend(con *gin.Context) {
 	checkErr(err)
 
 	con.JSON(http.StatusCreated, fri)
+}
+
+func checkLogin(con *gin.Context) {
+	var acc accountLogin
+  var res stringReturn
+
+	err := con.BindJSON(&acc)
+	checkErr(err)
+
+	hasher.Reset()
+	hasher.Write([]byte(acc.Password))
+	acc.Password = hex.EncodeToString(hasher.Sum(nil))
+
+  rows, err := db.Query("SELECT * FROM accounts WHERE \"username\" == ?", acc.Username)
+  checkErr(err)
+
+  var count = 0
+  var match = false;
+
+  for rows.Next() {
+    count += 1
+    var che account
+    err := rows.Scan(&che.Username, &che.Password, &che.Email)
+    checkErr(err)
+    if(che.Password == acc.Password) {
+      match = true;
+    }
+  }
+  rows.Close()
+
+  if(count == 0) {
+    res.Value = "baduser"
+  }else {
+    if(match == true) {
+      res.Value = "goodpassword"
+    }else {
+      res.Value = "badpassword"
+    }
+  }
+  con.JSON(http.StatusOK, res);
 }
