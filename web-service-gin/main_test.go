@@ -226,7 +226,7 @@ func TestGetMessagesCount(t *testing.T){
 
 func TestGetAccountsCount(t *testing.T){
   db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
-  expectedCount := 2; //Check number of accounts from database.db viewer
+  expectedCount := 5; //Check number of accounts from database.db viewer
   actualCount := 0;
   rows, err := db.Query("SELECT * FROM accounts"); if(err!=nil){panic(err)};
   for rows.Next(){
@@ -245,7 +245,7 @@ func TestGetAccountsCount(t *testing.T){
 
 func TestGetAccountsContent(t *testing.T){
   db, err := sql.Open("sqlite3", "./database.db"); if(err!=nil){panic(err)};
-  expectedName := "tester2"; //Check last account added in database.db viewer
+  expectedName := "Nidolabz"; //Check last account added in database.db viewer
   actualName := "";
   buffer := "";
   rows, err := db.Query("SELECT * FROM accounts"); if(err!=nil){panic(err)};

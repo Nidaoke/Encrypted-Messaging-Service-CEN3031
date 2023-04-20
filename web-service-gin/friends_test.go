@@ -77,7 +77,7 @@ func TestGetRequestFrom(t *testing.T) {
 
 	numRequests := 0
 
-	expectedSentFrom := "Tester1"
+	expectedSentFrom := "tester1"
 
 	var id int64
 	var sentFrom string
@@ -128,7 +128,7 @@ func TestGetRequestTo(t *testing.T) {
 
 	numRequests := 0
 
-	expectedSentTo := "Tester2"
+	expectedSentTo := "tester2"
 
 	var id int64
 	var sentFrom string
