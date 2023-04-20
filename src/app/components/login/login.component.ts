@@ -84,10 +84,10 @@ export class LoginComponent implements OnInit {
     //if not, prompt for Sign Up (alert form)
 
     const url = 'http://localhost:9000/checklogin';
-    const username = this.loginForm.get('username')!.value;
-    const password = this.loginForm.get('password')!.value;
+    let formObj = this.loginForm.getRawValue();
+    let serializedForm = JSON.stringify(formObj);
 
-    this.http.post(url, { username, password }).subscribe(
+    this.http.post(url, { serializedForm }).subscribe(
       (response: Object) => {
         // Cast the response to an object with a value property
         const responseData = response as { value: string };
