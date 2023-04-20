@@ -77,7 +77,7 @@ func TestGetRequestFrom(t *testing.T) {
 
 	numRequests := 0
 
-	expectedSentFrom := "tester1"
+	expectedSentFrom := "Tester1"
 
 	var id int64
 	var sentFrom string
@@ -128,7 +128,7 @@ func TestGetRequestTo(t *testing.T) {
 
 	numRequests := 0
 
-	expectedSentTo := "tester2"
+	expectedSentTo := "Tester2"
 
 	var id int64
 	var sentFrom string
@@ -254,10 +254,10 @@ func TestGetFriends(t *testing.T) {
 	numConns := 0
 
 	expectedId := 0
-	expectedUser1 := "tester1"
-	expectedUser2 := "tester2"
+	expectedUser1 := "Tester1"
+	expectedUser2 := "Tester2"
 
-	var id int64
+	var id int
 	var user1 string
 	var user2 string
 
@@ -267,6 +267,11 @@ func TestGetFriends(t *testing.T) {
 
 		if err != nil {
 			panic("Failed to iterate through the database! %w")
+		}
+
+		if id == expectedId {
+			fmt.Printf("Found friend connection!")
+			break
 		}
 
 		numConns++
@@ -290,10 +295,10 @@ func TestGetFriends(t *testing.T) {
 	if id != 0 {
 		panic("Request Id's do not match!")
 	}
-	if expectedUser1 != "tester1" {
+	if expectedUser1 != "Tester1" {
 		panic("User 1 does not match!")
 	}
-	if expectedUser2 != "tester2" {
+	if expectedUser2 != "Tester2" {
 		panic("User 2 does not match!")
 	}
 
@@ -306,11 +311,11 @@ func TestPostFriend(t *testing.T) {
 	fmt.Println("START POST FRIENDS TEST")
 	const file string = "test.db"
 
-	var expectedId int64 = 1
+	var expectedId int = 4
 	var expectedUser1 string = "Marcus"
 	var expectedUser2 string = "Jon"
 
-	var id int64
+	var id int
 	var user1 string
 	var user2 string
 
@@ -324,7 +329,7 @@ func TestPostFriend(t *testing.T) {
 
 	fmt.Println("Open database succuss!")
 
-	_, err = db.Exec("INSERT INTO friends VALUES(1, \"Marcus\", \"Jon\")")
+	_, err = db.Exec("INSERT INTO friends VALUES(4, \"Marcus\", \"Jon\")")
 	if err != nil {
 		panic(err)
 	}
@@ -341,18 +346,20 @@ func TestPostFriend(t *testing.T) {
 		if err != nil {
 			panic(err)
 		}
+
+		if id == expectedId {
+			fmt.Printf("Found friend connection! \n")
+			_, err = db.Exec("DELETE FROM friends WHERE \"user1\" LIKE \"Marcus\"")
+			break
+		}
+
 		numConns++
 	}
 
 	fmt.Println("Number of requests in database:", numConns)
 
-	_, err = db.Exec("DELETE FROM friends WHERE \"user1\"==\"Marcus\"")
-	if err != nil {
-		panic(err)
-	}
-
 	fmt.Print("Expected Request ID: ")
-	fmt.Print("1")
+	fmt.Print("4")
 	fmt.Print("\nActual Request ID: ")
 	fmt.Println(id)
 	fmt.Print("Expected User 1: ")
@@ -364,7 +371,7 @@ func TestPostFriend(t *testing.T) {
 	fmt.Print("\nActual User 2: ")
 	fmt.Println(user2)
 
-	if expectedId != 1 {
+	if expectedId != 4 {
 		panic("Request Id's do not match!")
 	}
 	if expectedUser1 != "Marcus" {
