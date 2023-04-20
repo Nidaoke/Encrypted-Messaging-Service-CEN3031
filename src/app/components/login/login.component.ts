@@ -63,6 +63,8 @@ export class LoginComponent implements OnInit {
       console.log(data);}
     );
 
+    this.router.navigate(['../profile']);
+
     // this.authService.onSignUp(this.signupForm.value).subscribe((msg) => {
     //   console.log(msg);
     // });
@@ -85,7 +87,7 @@ export class LoginComponent implements OnInit {
       (response) => {
         // Successful authentication, redirect to the home page or user profile
         console.log('Authentication successful', response);
-        this.router.navigate(['/home']);
+        this.router.navigate(['../profile']);
       },
       (error) => {
         // Failed authentication, show an error message
