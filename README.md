@@ -16,8 +16,9 @@ Required installments: Angular 13 for front, Go for back.
 
 ## Step 1
   Open the project in the terminal with the correct directory and boot up the backend first. 
-  -> cd web (and press tab. This should bring you to the right section)
-  In the terminal, execute the command 'go run .' to boot up in localhost:9000
+  CD into web-service-gin, and execute the command 'go run .', this will run the backend on localhost:9000.
+  Ensure all the Go depenencies are installed (including database/sql, fmt, net/http, crypto/sha256, encoding/hex, github.com/gin-contrib/cors
+    github.com/gin-gonic/gin, github.com/mattn/go-sqlite3, and github.com/thinkerou/favicon). You should be able to do this with 'go get ./...'.
 
 ## Step 2
   Once the backend is loaded, open a new terminal to the project and execute command 'ng serve' to start the project at localhost:4200
@@ -26,3 +27,4 @@ Required installments: Angular 13 for front, Go for back.
   * **/home** Goes to the message home page 
   * **/profile** Goes to profile page for personal account editing
   * **/forget** Goes to the forget-password page to reset password and authentification
+  * For backend routes (on localhost:9000), please see the Backend API section of the most recent sprint documentation.
