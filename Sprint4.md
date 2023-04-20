@@ -16,17 +16,20 @@
 # Unit Tests
 ## Backend
 #### GetRequests:
-    
+    This is checking the database to see what friend requests have been made and how many there are.
 #### GetRequestsFrom:
-    
+    This checks the database to see where all the friend requests have came from and how many there are.
 #### GetRequestsTo:
-    
+    This checks the database to see where all the friend requests have came to and how many there are.
 #### PostRequests:
-    
+    This inputs a friend request into the database with who it is from and where it is going to.
 #### GetFriends:
-    
+    This checks the database to see how many friend connections where all the friend requests have solidified.
 #### PostFriend:
-    
+    This inputs the friend connection into the database between two users.
+#### CheckLogin:
+    This checks the username and password of a user in the database to see if it is correct or not.
+
 ## Frontend
 #### Cypress Tests:
     spec: Building off of Sprint 2's Cypress Test, this one checks to see if a user is able to sign up and be redirected to a Patrick profile page. 
