@@ -78,28 +78,39 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(): void {
-    //authentication
 
+    //authentication
 
     //take username and password
     //make HTTP request to backend to find it
     //if found, load up that person's homepage
     //if not, prompt for Sign Up (alert form)
 
-    const url = 'http://localhost:9000/login';
+    const url = 'http://localhost:9000/checklogin';
     const username = this.loginForm.get('username')!.value;
     const password = this.loginForm.get('password')!.value;
 
     this.http.post(url, { username, password }).subscribe(
       (response) => {
-        // Successful authentication, redirect to the home page or user profile
-        console.log('Authentication successful', response);
-        this.router.navigate(['../profile']);
+        // Check the response string and handle it accordingly
+        const responseString = response.toString();
+        if (responseString === 'goodpassword') {
+          console.log('Authentication successful', response);
+          this.router.navigate(['/home']);
+        }
+        else if (responseString === 'baduser' || responseString === 'badpassword') {
+          console.log('Authentication failed: invalid username or password', response);
+          alert('Invalid username or password');
+        }
+        else {
+          console.log('Authentication failed: unknown response', response);
+          alert('Unknown response');
+        }
       },
       (error) => {
         // Failed authentication, show an error message
         console.log('Authentication failed', error);
-        alert('Invalid username or password');
+        alert('Cannot make it to back');
       }
     );
   }
