@@ -89,19 +89,27 @@ export class LoginComponent implements OnInit {
 
     this.http.post(url, { username, password }).subscribe(
       (response: Object) => {
+        // Cast the response to an object with a value property
         const responseData = response as { value: string };
         // Check the response string and handle it accordingly
         const responseString = responseData.value;
 
+        // If the response is 'goodpassword', authentication is successful and redirect to home page
         if (responseString === 'goodpassword') {
           console.log('Authentication successful', response);
           this.router.navigate(['/home']);
         }
-        else if (responseString === 'baduser' || responseString === 'badpassword') {
-          console.log('Authentication failed: invalid username or password', response);
-          alert('Invalid username or password');
+        // If the response is 'baduser' or 'badpassword', authentication failed and prompt for invalid credentials
+        else if (responseString === 'baduser') {
+          console.log('Authentication failed: invalid usename', response);
+          alert('Invalid usename');
+        }
+        else if ( responseString === 'badpassword') {
+          console.log('Authentication failed: invalid password', response);
+          alert('Invalid password');
         }
         else {
+          // If the response is neither 'goodpassword', 'baduser' nor 'badpassword', show an error message
           console.log('Authentication failed: unknown response', response);
           alert('Unknown response');
         }
