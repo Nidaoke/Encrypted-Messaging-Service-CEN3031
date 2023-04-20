@@ -42,7 +42,8 @@
 #### Login Component:
     The first unit test checks that the login component page provides the 3 input boxes for user signup (username, email, and password) and 
       the 2 input boxes for user login (username and password). It also checks that the signup and login buttons are provided and that they work.
-    The second unit test checks to see if the 
+    The second unit test checks to see if Signup works with a new username and password.
+    The third unit test is a continuation of second unit test to see if it's able to login with the new signup.
 #### Forget Component:
     Checks that the forget component page provides the 2 input boxes (username and email) for user password recovery and that recover button 
     is provided to make the request.
