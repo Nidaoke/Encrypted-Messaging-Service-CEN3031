@@ -14,13 +14,13 @@ Our team is composed of four members. [Jonathan Cunningham](https://github.com/N
 Required installments: Angular 13 for front, Go for back. 
 (May also need to install CLI if not done so to run Angular.)
 
-## Step 1
+## Step 1 - Backend
   Open the project in the terminal with the correct directory and boot up the backend first. 
   CD into web-service-gin, and execute the command 'go run .', this will run the backend on localhost:9000.
   Ensure all the Go depenencies are installed (including database/sql, fmt, net/http, crypto/sha256, encoding/hex, github.com/gin-contrib/cors
     github.com/gin-gonic/gin, github.com/mattn/go-sqlite3, and github.com/thinkerou/favicon). You should be able to do this with 'go get ./...'.
 
-## Step 2
+## Step 2 - Frontend
   Once the backend is loaded, open a new terminal to the project and execute command 'ng serve' to start the project at localhost:4200
 
 ## Routes
