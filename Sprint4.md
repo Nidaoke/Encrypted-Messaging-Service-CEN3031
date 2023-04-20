@@ -8,6 +8,8 @@
     made for this purpose.
     The backend-database has been setup to allow for friend requests to be sent between users, and relationships established between them.
     This allows for users to target their messages and view them between specific friends that they have mutually added.
+    Additionally, we've added some API functionality to ease the burdon of user authentication and verification from the frontend - more details can
+    be seen in the CheckLogin function in the API documentation.
     The goal for next sprint is to be able to send/store longer messages, refine the visuals of various components, connect/route everything
     together, and hopefully get to the authentification during sign up.
 
