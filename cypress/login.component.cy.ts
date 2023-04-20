@@ -45,30 +45,3 @@ it('Login', () => {
   cy.get('input[formcontrolname="loginPassword"]').type("Password123")
   cy.get('button[name="login"]').click()
 })
-
-//Unit test to sign up
-it('Sign up', () => {
-  cy.mount(LoginComponent, {
-    imports: [HttpClientModule],
-    declarations: [LoginComponent],
-    providers: [HttpClient],
-  })
-
-  cy.get('input[formcontrolname="username"]').type('UserNameUnitTest')
-  cy.get('input[formcontrolname="email"]').type("usernameunittest@test.com")
-  cy.get('input[formcontrolname="password"]').type("Password123")
-  cy.get('button[name="signup"]').click()
-})
-
-//Continuation of Signup
-it('Login', () => {
-cy.mount(LoginComponent, {
-  imports: [HttpClientModule],
-  declarations: [LoginComponent],
-  providers: [HttpClient],
-})
-
-cy.get('input[formcontrolname="loginUsername"]').type('UserNameUnitTest')
-cy.get('input[formcontrolname="loginPassword"]').type("Password123")
-cy.get('button[name="login"]').click()
-})
