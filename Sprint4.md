@@ -33,11 +33,11 @@
     forget: This e2e test will slowly be filled out as we go on. Its end goal is to be able to send an authentification email and to change password successfully.
         As of right now, since the "forget password" option in underneath the "Login" section, we are just trying to see if the login section is able to be pulled up.
 #### Login Component:
-    Checks that the login component page provides the 3 input boxes for user signup (username, email, and password) and the 2 input boxes for user login (username and password). It also checks that the signup and login buttons are provided.
+    Checks that the login component page provides the 3 input boxes for user signup (username, email, and password) and the 2 input boxes for user login (username and password). It also checks that the signup and login buttons are provided and that they work.
 #### Forget Component:
     Checks that the forget component page provides the 2 input boxes (username and email) for user password recovery and that recover button is provided to make the request.
 #### Profile Component:
-    Checks that the profile component page provides the 3 buttons to either edit the profile, logout, or send a message.
+    Checks that the profile component page provides the 2 buttons to either logout or send a message.
 #### Home Component:
     The first unit test is testing to see if the search bar is able to be clicked and if the autocomplete of "Testerbaby" would pop up. This is to make sure
         for future user friends it would pop their names up.
